@@ -1,12 +1,18 @@
 ﻿#include <iostream>
-
 using namespace std;
 
 int main()
 {
-	cout << "|\\_/|";						cout << "\n";
-	cout << "|q p|" << "   " << "/}";		cout << "\n";	
-	cout << "( 0 )\"\"\"\\";				cout << "\n";
-	cout << "|\"^\"\`" << "    " << "|";	cout << "\n";
-	cout << "||_/=\\\\__|";
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+
+	int tempA;
+	int tempB;
+
+	while (cin >> tempA >> tempB)
+	{
+		cout << tempA + tempB << endl;
+	}
+
+	return 0;
 }

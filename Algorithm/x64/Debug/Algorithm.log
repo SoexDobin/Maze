@@ -1,2 +1,16 @@
 ﻿  Algorithm.cpp
+C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(15,11): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+      C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(15,11):
+      템플릿 인스턴스화 컨텍스트(가장 오래된 인스턴스화 컨텍스트)가
+          C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(71,46):
+          컴파일되는 클래스 템플릿 인스턴스화 'Priority_queue<int,std::vector<int,std::allocator<int>>,std::less<int>>'에 대한 참조를 확인하세요.
+          C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(12,7):
+          클래스 템플릿 멤버 함수 'void Priority_queue<int,std::vector<int,std::allocator<int>>,std::less<int>>::push(const T &)'을(를) 컴파일하는 중입니다.
+          with
+          [
+              T=int
+          ]
+              C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(73,9):
+              'main'에서 'Priority_queue<int,std::vector<int,std::allocator<int>>,std::less<int>>::push'에 대한 첫 번째 참조를 확인하세요.
+  
   Algorithm.vcxproj -> C:\Users\a9018\Desktop\Maze\x64\Debug\Algorithm.exe

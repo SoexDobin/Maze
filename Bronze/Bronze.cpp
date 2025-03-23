@@ -1,30 +1,41 @@
 ﻿#include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
 int main()
 {
-	int* num;
-	int bestNum = INT32_MIN;
-	int minimunNum = INT32_MAX;
-	int size;
+	int t;
+	int* sizeBox;
+	string s;
+	vector<string> p;
+	vector<string> sv;
 
-	cin >> size;
-	num = new int[size];
-	for (int i = 0; i < size; i++)
+	cin >> t;
+	sv.resize(t);
+	sizeBox = new int[t];
+	for (int i = 0; i < t; i++)
 	{
-		int input;
-
-		cin >> input;
-		num[i] = input;
-	}
-
-	for (int i = 0; i < size; i++)
-	{
-		if (bestNum < num[i])
-			bestNum = num[i];
-		if (minimunNum > num[i])
-			minimunNum = num[i];
+		cin >> sizeBox[i] >> s;
+		sv[i] = s;
 	}
 	
-	cout << minimunNum << " " << bestNum << endl;
+	p.resize(1000);
+	for (int i = 0; i < t; i++)
+	{
+		int index = 0;
+		for (int j = 0; j < sv[i].size(); j++)
+		{
+			index += sizeBox[i];
+			for (int k = 0; k < sizeBox[i]; k++)
+			{
+				p[i] += sv[i][j];
+			}
+		}
+	}
+
+	for (int i = 0; i < t; i++)
+		cout << p[i] << endl;
+
+	delete[] sizeBox;
 }

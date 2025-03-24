@@ -3,85 +3,52 @@
 #include <queue>
 using namespace std;
 
+vector<vector<int>> maze;
+vector<vector<bool>> discovered;
 
-template<typename T, typename Container = vector<T>, typename Predicate = less<T>>
-class Priority_queue
+struct Dir {
+	int x;
+	int y;
+};
+
+void CreateGraph()
 {
-public:
+	maze = vector<vector<int>>(4, vector<int>(4));
+	discovered = vector<vector<bool>>(4, vector<bool>(4, false));
 
-	void push(const T& data)
+	maze = {
+		{1, 0, 1, 1, 1, 1},
+		{1, 0, 1, 0, 1, 0},
+		{1, 0, 1, 0, 1, 1},
+		{1, 1, 1, 0, 1, 1},
+	};
+}
+
+void AStar()
+{
+	/*00 01 02 03
+	10 11 12 13
+	20 21 22 23
+	30 31 32 33*/
+
+	Dir start = { 2, 2 };
+	Dir destination = { 0, 1 };
+
+	vector<Dir> dir = {
+		{-1, 0},	// 상
+		{0, -1},	// 좌
+		{1, 0},		// 하
+		{0, 1},		// 우
+	};
+	priority_queue<Dir> queue;
+
+	while(true)
 	{
-		_heap.push_back(data);
-		int now = _heap.size() - 1;
-		
-		while (true)
-		{
-			int parentIndex = static_cast<int>((now - 1)) / 2;
 
-			if (now == 0)
-				break;
-			if (_predicate(_heap[now], _heap[parentIndex]))
-				break;
-			
-			::swap(_heap[now], _heap[parentIndex]);
-			now = parentIndex;
-		}
 	}
-
-	void pop()
-	{
-		// 배열 사이즈 맞추기
-		// 가중치 높은 놈이 맨위로
-		_heap.front() = _heap.back();
-		_heap.pop_back();
-
-		int now = 0;
-		while (true)
-		{
-			int left = now * 2 + 1;
-			int right = now * 2 + 2;
-
-			if (left >= _heap.size())
-				break;
-
-			int next = now;
-			if (_predicate(_heap[next], _heap[left]))
-				next = left;
-
-			if (right < _heap.size() && _predicate(_heap[next], _heap[right])) 
-				next = right;
-
-			if (next == now) break;
-
-			::swap(_heap[now], _heap[next]);
-			now = next;
-		}
-	}
-
-	T& top() { return _heap[0]; }
-	bool empty() { return _heap.empty(); }
-
-private:
-	vector<T> _heap;
-	Predicate _predicate;
 };
 
 int main()
 {
-	Priority_queue<int, vector<int>, less<int>> pq;
-
-	pq.push(100);
-	pq.push(300);
-	pq.push(200);
-	pq.push(500);
-	pq.push(400);
-
-	while (pq.empty() == false)
-	{
-		int value = pq.top();
-		
-		pq.pop();
-
-		cout << value << endl;
-	}
+	
 }

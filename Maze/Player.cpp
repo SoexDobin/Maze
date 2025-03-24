@@ -275,7 +275,6 @@ void Player::AStar()
 		parent[start] = start;
 	}
 
-
 	while (pq.empty() == false)
 	{
 		// 제일 좋은 후보를 찾는다

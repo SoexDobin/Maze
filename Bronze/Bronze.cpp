@@ -1,41 +1,38 @@
 ﻿#include <iostream>
-#include <vector>
-#include <string>
+#include <cmath>
 using namespace std;
 
 int main()
 {
-	int t;
-	int* sizeBox;
-	string s;
-	vector<string> p;
-	vector<string> sv;
+	int size;
+	int* arr;
 
-	cin >> t;
-	sv.resize(t);
-	sizeBox = new int[t];
-	for (int i = 0; i < t; i++)
+	cin >> size;
+	arr = new int[size];
+	for (int i = 0; i < size; i++)
 	{
-		cin >> sizeBox[i] >> s;
-		sv[i] = s;
+		cin >> arr[i];
+	}
+
+
+	int primeIndex = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] == 1) continue;
+
+		bool isPrime = true;
+		int range = static_cast<int>(sqrt(arr[i]) + 1);
+		for (int j = 2; j < range; j++)
+		{
+			int remain = arr[i] % j;
+			if (remain == 0)
+				isPrime = false;
+		}
+
+		if (isPrime)
+			primeIndex++;
 	}
 	
-	p.resize(1000);
-	for (int i = 0; i < t; i++)
-	{
-		int index = 0;
-		for (int j = 0; j < sv[i].size(); j++)
-		{
-			index += sizeBox[i];
-			for (int k = 0; k < sizeBox[i]; k++)
-			{
-				p[i] += sv[i][j];
-			}
-		}
-	}
-
-	for (int i = 0; i < t; i++)
-		cout << p[i] << endl;
-
-	delete[] sizeBox;
+	cout << primeIndex << endl;
+	delete[] arr;
 }

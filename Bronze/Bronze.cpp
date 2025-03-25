@@ -23,7 +23,6 @@ int main() {
         index++;
     }
     
-    
     vector<bool> pelVec = vector<bool>( v.size(), true);
     for (int i = 0; i < v.size(); i++)
     {

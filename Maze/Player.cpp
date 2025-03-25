@@ -216,11 +216,11 @@ void Player::AStar()
 
 	enum
 	{
-		// DIR_COUNT = 4, // 직각 이동
+		//DIR_COUNT = 4, // 직각 이동
 		DIR_COUNT = 8, // 대각선 이동
 	};
 
-	Pos front[8] = {
+	Pos front[] = {
 		Pos {-1, 0},	// UP
 		Pos {0, -1},	// LEFT
 		Pos {1, 0},		// DOWN
@@ -244,94 +244,69 @@ void Player::AStar()
 	};
 
 	int32 boardSize = _board->GetSize();
-
-	// ClosedList
-	// close[y][x] -> (y, x)에 방문을 했는지 여부
-	vector<vector<bool>> 
-		closed(boardSize, vector<bool>(boardSize, false));
-
-	// best[y][x] -> 지금까지 (y, x)에 대한 가장 좋은 비용 (적을 수록 좋음)
-	vector<vector<int32>> 
-		best(boardSize, vector<int32>(boardSize, INT32_MAX));
-
-	// 부모 추적 용도
+	vector<vector<int>> bestFX 
+		= vector<vector<int>>(boardSize, vector<int>(boardSize, INT32_MAX));
+	vector<vector<bool>> discovered 
+		= vector<vector<bool>>(boardSize, vector<bool>(boardSize, false));
 	map<Pos, Pos> parent;
 
-	// OpenList;
 	priority_queue<PQNode, vector<PQNode>, greater<PQNode>> pq;
-
-	// 1) 예약(발견) 시스템 구현
-	// - 이미 더 좋은 경로를 찾았다면 스킵
-	// 2) 뒤늦게 더 좋은 경로가 발견될 수 있음 -> 예외 처리 필수
-	// - openList에서 찾아서 제거한다거나
-	// - pq에서 pop한 다음에 무시한다거나
-
-	// 초기값
+	
 	{
-		int32 g = 0;
-		int32 h = 10 * (abs(dest.y - start.y) + abs(dest.x - start.x));
-		pq.push(PQNode{ g + h, g, start });
-		best[start.y][start.x] = g + h;
+		int g = 0;
+		int h = 10 * (abs(dest.y - start.y) + abs(dest.x - start.x));
+		pq.push(PQNode{g + h, g, start});
+		bestFX[start.y][start.x] = g + h;
 		parent[start] = start;
 	}
 
+	
 	while (pq.empty() == false)
 	{
-		// 제일 좋은 후보를 찾는다
 		PQNode node = pq.top();
 		pq.pop();
 
-		// 동일한 좌표를 여러 경로로 찾아서
-		// 더 빠른 경로로 인해서 이미 방문(closed)된 경우 스킵
-
-		// [선택] 
-		if (closed[node.pos.y][node.pos.x])
+		if (discovered[node.pos.y][node.pos.x])
 			continue;
-		if (best[node.pos.y][node.pos.x] < node.f)
+		if (bestFX[node.pos.y][node.pos.x] < node.f)
 			continue;
+		discovered[node.pos.y][node.pos.x] = true;
+		
+		if (node.pos == dest) break;
 
-		// 방문
-		closed[node.pos.y][node.pos.x] = true;
-
-		// 목적지에  도착했으면 바로 종료
-		if (node.pos == dest)
-			break;
-
-		for (int32 dir = 0; dir < DIR_COUNT; dir++)
+		for (int i = 0; i < DIR_COUNT; i++)
 		{
-			Pos nextPos = node.pos + front[dir];
-			// 갈 수 있는 지역은 맞는지 확인
+			Pos nextPos = node.pos + front[i];
+
 			if (CanGo(nextPos) == false)
 				continue;
-			if (closed[nextPos.y][nextPos.x])
+			if (discovered[nextPos.y][nextPos.x])
 				continue;
 
-			// 비용 계산 
-			int32 g = node.g + cost[dir];
-			int32 h = 10 * (abs(dest.y - nextPos.y) + abs(dest.x - nextPos.x));
-			// 다른 경로에서 더 빠른 길을 찾았으면 스킵
-			if (best[nextPos.y][nextPos.x] <= g + h)
+			int g = node.g + cost[i];
+			int h = 10 * (abs(dest.y - nextPos.y) + abs(dest.x - nextPos.x));
+			if (bestFX[nextPos.y][nextPos.x] <= g + h)
 				continue;
 
-			// 예약 진행
-			best[nextPos.y][nextPos.x] = g + h;
+			bestFX[nextPos.y][nextPos.x] = g + h;
 			pq.push(PQNode{ g + h, g, nextPos });
-			parent[nextPos] = node.pos;
+			parent[nextPos] = node.pos;  // 수정된 부분
 		}
 	}
 
+	
 	Pos pos = dest;
 	_path.clear();
 	_pathIndex = 0;
 
-	while (true)
+	while (true) 
 	{
 		_path.push_back(pos);
 
 		if (parent[pos] == pos)
 			break;
 
-		pos = parent[pos];
+		pos	= parent[pos];
 	}
 
 	std::reverse(_path.begin(), _path.end());

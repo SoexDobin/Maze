@@ -1,43 +1,47 @@
 ﻿#include <iostream>
-#include <map>
-#include <string>
-#include <cmath>
+#include <vector>
+#include <queue>
 using namespace std;
-
-const int M = 1234567891;
-unsigned long long Factorial(map<char, int> m, int f, string s);
 
 int main() 
 {
-	int n;
-	string s;
-	cin >> n;
-	cin >> s;
-	map<char, int> m;
-	
-	for (int i = 1; i < 27; i++)
+	int t;
+	int k; // 층수 0시작
+	int n; // 호수 1시작
+	       // 인수는 k-1층의 n호 까지
+	vector<vector<int>> room(1, vector<int>(15));
+	queue<int> find;
+	cin >> t;
+	for (int i = 0; i <= 14; i++)
+		room[0][i] = i;
+
+	while (t > 0)
 	{
-		m.insert({(96 + i), i});
+		cin >> k;
+		cin >> n;
+
+		if (k >= room.size())
+			room.resize(k + 1);
+		
+		
+		for (int i = 1; i <= k; i++)
+		{
+			if (room[i].size() <= n)
+				room[i].resize(n + 1, 0);
+
+			int acc = 0;
+			for (int j = 1; j <= n; j++)
+			{	
+				acc += room[i - 1][j];
+				room[i][j] = acc;
+			}
+		}
+		find.push(room[k][n]);
+		t--;
 	}
-
-	cout << Factorial(m, 0, s) % M << endl;
-}
-
-unsigned long long Factorial(map<char, int> m, int i, string s)
-{
-	
-	if (s == "\0") return 0;
-	const char c = s.front();
-	s = s.substr(1);
-	int value = m.find(c)->second;
-
-	unsigned long long mul = 1;
-	for (int j = 0; j < i; j++)
+	while (find.empty() == false)
 	{
-		mul = (mul * 31) % M;
+		cout << find.front() << "\n";
+		find.pop();
 	}
-	unsigned long long acc = (value * mul) % M;
-	acc = (acc + Factorial(m, i + 1, s)) % M;
-
-	return acc;
 }

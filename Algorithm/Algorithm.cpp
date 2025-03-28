@@ -41,6 +41,16 @@ void SetCursorColor(ConsoleColor color)
 	::SetConsoleTextAttribute(output, static_cast<SHORT>(color));
 }
 
+void ShowConsoleCursor(bool flag)
+{
+	HANDLE output = ::GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+	::GetConsoleCursorInfo(output, &cursorInfo);
+	cursorInfo.bVisible = flag;
+	::SetConsoleCursorInfo(output, &cursorInfo);
+}
+
+
 // Red-Black Tree
 // 1) 모든 노드는 Red or Black
 // 2) Root는 Black
@@ -62,6 +72,8 @@ public:
 	};
 	void Print()
 	{
+		::system("cls");
+		ShowConsoleCursor(false);
 		Print(_root, 10, 0);
 	}
 	void Print(Node* node, int x, int y)
@@ -277,15 +289,37 @@ public:
 		Node* deleteNode = Search(_root, key);
 		Delete(deleteNode);
 	}
+	// 먼저 BST 삭제 실행
+	//          [20]
+	//   [10(B)]    [30]
+	//     [15(R)] [25][40]
+	// 10 삭제 ----------------------
+	//          [20]
+	//   [15(B)]    [30]
+	//             [25][40]
 	void Delete(Node* node)
 	{
-		if (node == nullptr)
+		if (node == _nil)
 			return;
 
-		if (node->left == nullptr)
+		if (node->left == _nil)
+		{
+			Color color = node->color;
+			Node* right = node->right;
 			Replace(node, node->right);
-		else if (node->right == nullptr)
+
+			if (color == Color::Black)
+				DeleteFixUp(right);
+		}
+		else if (node->right == _nil)
+		{
+			Color color = node->color;
+			Node* left = node->left;
 			Replace(node, node->left);
+
+			if (color == Color::Black)
+				DeleteFixUp(left);
+		}
 		else
 		{
 			// 다음 데이터 찾기
@@ -294,11 +328,129 @@ public:
 			Delete(next);
 		}
 	}
+
+	void DeleteFixUp(Node* node)
+	{
+		// 삭제할 노드 x
+		Node* x = node;
+
+		// [Case1][Case2]
+		while (x != _root && x->color == Color::Black)
+		{
+			//       [p(B)]
+			// [x(DB)]   [s(R)]
+			//          [1]
+			// -----------------
+			//          [s(B)]
+			//      [p(R)]
+			// [x(DB)]   [1] 
+			if (x == x->parent->left)
+			{
+				// [Case3]
+				Node* s = x->parent->right;
+				if (x->color == Color::Red)
+				{
+					s->color = Color::Black;
+					x->parent->color = Color::Red;
+
+					LeftRotate(x->parent);
+					s = x->parent->right; // [1]
+				}
+
+				// [Case4]
+				if (s->left->color == Color::Black && s->right->color == Color::Black)
+				{
+					s->color = Color::Red;
+					x = x->parent;
+				}
+				// [Case5] case 6로 만드는 과정
+				else
+				{
+					//        [p(B)]
+					// [x(DB)]      [s(B)]
+					//        [near[R]][far[B]]
+					// -------------------------
+					//         [p(B)]  
+					//  [x(DB)]     [near[B]]
+					//                   [s(R)]
+					//                      [far[B]] 
+					if (s->right->color == Color::Black)
+					{
+						s->left->color = Color::Black;
+						s->color == Color::Red;
+						RightRotate(s);
+						s = x->parent->right;
+					}
+					           //[pp]
+					//         [p(B)]  
+					//  [x(DB)]     [s[B]]
+					//                   [far(R)]
+					// ---------------------------
+					//           [s[B]]
+					//       [p(B)]   [far(B)] 
+					//  [x(B)]         
+					// [Case6]
+					s->color = x->parent->color;
+					x->parent->color = Color::Black;
+					s->right->color = Color::Black;
+					LeftRotate(x->parent);
+					x = _root;
+				}
+			}
+			else
+			{
+				// [Case1][Case2]
+				while (x != _root && x->color == Color::Black)
+				{
+					if (x == x->parent->right)
+					{
+						// [Case3]
+						Node* s = x->parent->left;
+						if (x->color == Color::Red)
+						{
+							s->color = Color::Black;
+							x->parent->color = Color::Red;
+
+							RightRotate(x->parent);
+							s = x->parent->left; // [1]
+						}
+
+						// [Case4]
+						if (s->right->color == Color::Black && s->left->color == Color::Black)
+						{
+							s->color = Color::Red;
+							x = x->parent;
+						}
+						// [Case5] 
+						else
+						{
+							if (s->left->color == Color::Black)
+							{
+								s->right->color = Color::Black;
+								s->color == Color::Red;
+								LeftRotate(s);
+								s = x->parent->left;
+							}
+
+							// [Case6]
+							s->color = x->parent->color;
+							x->parent->color = Color::Black;
+							s->right->color = Color::Black;
+							RightRotate(x->parent);
+							x = _root;
+						}
+					}
+				}
+			}
+		}
+		x->color = Color::Black;
+	}
+
 	// u서브트리를 v서브트리로 교체
 	// 그리고 delete u
 	void Replace(Node* u, Node* v)
 	{
-		if (u->parent == nullptr)
+		if (u->parent == _nil)
 			_root = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
@@ -372,10 +524,12 @@ int main()
 	bst.Insert(25);
 	bst.Print();
 	this_thread::sleep_for(1s);
-	bst.Insert(40);
+
+	bst.Delete(20);
 	bst.Print();
 	this_thread::sleep_for(1s);
-	bst.Insert(50);
+
+	bst.Delete(10);
 	bst.Print();
 	this_thread::sleep_for(1s);
 }

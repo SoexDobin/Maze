@@ -1,2 +1,4 @@
 ﻿  Algorithm.cpp
+C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(380,16): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\a9018\Desktop\Maze\Algorithm\Algorithm.cpp(430,18): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
   Algorithm.vcxproj -> C:\Users\a9018\Desktop\Maze\x64\Debug\Algorithm.exe

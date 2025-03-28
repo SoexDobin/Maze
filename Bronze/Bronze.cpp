@@ -1,45 +1,43 @@
 ﻿#include <iostream>
-#include <vector>
+#include <map>
+#include <string>
 #include <cmath>
 using namespace std;
 
-int main() {
-	int n1, n2;
+const int M = 1234567891;
+unsigned long long Factorial(map<char, int> m, int f, string s);
 
-	cin >> n1 >> n2;
-	int range = n1 <= n2 ? n2 : n1;
-	// 최대 공약수
-	// 공통으로 나뉘어 지는 수중에서 가장 큰 수
-	int bestDivisor = 1;
-	int index = range + 1;
-	while (index > 2)
+int main() 
+{
+	int n;
+	string s;
+	cin >> n;
+	cin >> s;
+	map<char, int> m;
+	
+	for (int i = 1; i < 27; i++)
 	{
-		index--;
-		if (n1 % index != 0 || n2 % index != 0)
-			continue;
-			
-		if (bestDivisor < index)
-			bestDivisor = index;	
+		m.insert({(96 + i), i});
 	}
-	cout << bestDivisor << endl;
 
-	// 최소 공배수
-	// 공통으로 가지는 배수 중에서 가장 작은 수
-	int leastMutiple = 1;
-	int mul = 0;
-	index = 0;
-	while (mul <= 100000000)
-	{
-		index++;
-		mul = bestDivisor * index;
-		if (mul % n1 != 0 || mul % n2 != 0)
-			continue;
-
-		leastMutiple = mul;
-		break;
-	}
-	cout << leastMutiple << endl;
-
+	cout << Factorial(m, 0, s) % M << endl;
 }
 
+unsigned long long Factorial(map<char, int> m, int i, string s)
+{
+	
+	if (s == "\0") return 0;
+	const char c = s.front();
+	s = s.substr(1);
+	int value = m.find(c)->second;
 
+	unsigned long long mul = 1;
+	for (int j = 0; j < i; j++)
+	{
+		mul = (mul * 31) % M;
+	}
+	unsigned long long acc = (value * mul) % M;
+	acc = (acc + Factorial(m, i + 1, s)) % M;
+
+	return acc;
+}

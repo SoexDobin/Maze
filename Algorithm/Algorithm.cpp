@@ -165,6 +165,93 @@ void QuickSort(vector<int>& v, int left, int right)
 	QuickSort(v, pivot + 1, right);
 }
 
+void TestTable()
+{
+	struct User
+	{
+		int userID = 0; // 1~999
+		string username;
+	};
+
+	vector<User> users;
+	users.resize(1000);
+
+	// write
+	users[777] = User{ 777, "Rookiss" };
+	// read
+	string name = users[777].username;
+	cout << name << endl;
+
+	// 테이블
+	// 키를 알면, 데이터를 단번에 찾을 수 있다
+}
+
+void TestHash()
+{
+	struct User
+	{
+		int userID = 0; // 1~int32_max
+		string username;
+	};
+
+	vector<User> users;
+	users.resize(1000);
+
+	const int userID = 123456789;
+	int key = (userID % 1000);
+	users[key] = User{ userID, "Rookiss" };
+	
+	User& user = users[key];
+	if (user.userID == userID) 
+	{
+		string name = users[key].username;
+		cout << name << endl;
+	}
+		
+
+	// 테이블
+	// 키를 알면, 데이터를 단번에 찾을 수 있다
+}
+
+// 충돌 문제
+// 충돌이 발생한 자리를 대신해서 다른 빈자리를 찾아나서면 된다
+// - 선형 조사법 (linear probing)
+// 이미 키값이 존재하면 다음 자리에 저장한다.
+// - 이차 조사법 (quadratic probing)
+// 이미 키값이 존재하면 n^2 만큼 자리에 저장한다.
+
+// 충돌이 나거나 배열 테이블 자체에 자리가 없을때
+// 채이닝 
+// 각 테이블 배열자체가 또한 배열, 연결 리스트 형식으로 되어서 다른 데이터를 가지는 것
+
+void TestHashTableChaining()
+{
+	struct User
+	{
+		int userID = 0; // 1~int32_max
+		string username;
+	};
+
+	vector<vector<User>> users;
+	users.resize(1000);
+
+	const int userID = 123456789;
+	int key = (userID % 1000);
+	// 채이닝
+	users[key].push_back(User{ userID, "Rookiss" });
+	users[key].push_back(User{ userID, "Faker" });
+
+	vector <User>& bucket = users[key];
+	for (User& user : bucket)
+	{
+		if (user.userID == userID)
+		{
+			string name = user.username;
+			cout << name << endl;
+		}
+	}
+}
+
 int main()
 {
 	vector<int> v;
@@ -181,7 +268,11 @@ int main()
 	//InsertionSort(v);
 	//HeapSort(v);
 	//MergeSort(v, 0, v.size() - 1);
-	QuickSort(v, 0, v.size() - 1);
-	for (int i = 0; i < v.size(); i++)
-		cout << v[i] << " ";
+	//QuickSort(v, 0, v.size() - 1);
+
+	TestHash();
+	//TestTable();
+
+	/*for (int i = 0; i < v.size(); i++)
+		cout << v[i] << " ";*/
 }

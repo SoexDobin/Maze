@@ -1,82 +1,44 @@
 ﻿#include <iostream>
-#include <string>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-template<typename T>
-class Stack
+bool binary_search(const vector<int>& v, int x)
 {
-public:
-	Stack() {};
-	~Stack() { delete[] arr; };
-
-	void push(const T& value)
+	int low = 0, high = v.size() - 1;
+	while (low <= high)
 	{
-		arr[_size] = value;
-		_size++;
+		int mid = low + (high - low) / 2;
+		if (v[mid] == x) return true;
+		if (v[mid] < x) low = mid + 1;
+		else high = mid - 1;
 	}
-	void pop()
-	{
-		int t = top();
-		cout << t << endl;
+	return 0;
+}
 
-		if (t < 0) return;
+int main() 
+{
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
 
-		_size--;
-	}
-	int size() { return _size; }
-	int top()
-	{
-		int t = arr[_size - 1];
-		if (_size == 0) return -1;
-	    else return t;
-	}
-	int empty()
-	{
-		if (_size == 0) return 1;
-		else return 0;
-	}
-	void resize() { arr = new T[10000]; }
-
-private:
-	int _size = 0;
-	T* arr;
-};
-
-
-int main() {
+	vector<int> v;
 	int size;
-	string keyword;
-	Stack<int> s;
-	s.resize();
-
 	cin >> size;
-	
+	v.resize(size);
 	for (int i = 0; i < size; i++)
 	{
-		cin >> keyword;
-		
-		if (keyword == "push")
-		{
-			int x;
-			cin >> x;
-			s.push(x);
-		}
-		else if (keyword == "pop")
-		{
-			s.pop();
-		}
-		else if (keyword == "top")
-		{
-			cout << s.top() << endl;
-		}
-		else if (keyword == "empty")
-		{
-			cout << s.empty() << endl;
-		}
-		else if (keyword == "size")
-		{
-			cout << s.size() << endl;
-		}
+		int x;
+		cin >> x;
+		v[i] = x;
+	}
+	::sort(v.begin(), v.end());
+	cin >> size;
+	for (int i = 0; i < size; i++)
+	{
+		int x;
+		cin >> x;
+		cout << binary_search(v, x) << "\n";
 	}
 }
+
+

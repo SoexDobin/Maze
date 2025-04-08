@@ -82,7 +82,6 @@ void HeapSort(vector<int>& v)
 // }
 void MergeResult(vector<int>& v, int left, int mid, int right)
 {
-
 	int leftIdx = left;
 	int rightIdx = mid + 1;
 	vector<int> temp;
@@ -123,16 +122,66 @@ void MergeResult(vector<int>& v, int left, int mid, int right)
 		v[left + i] = temp[i];
 };
 
-void MergeSort(vector<int>& v, int left, int right)
+void MergeSort(vector<int>& v, int left, int right, int a)
 {
 	if (left >= right)
 		return;
 
 	int mid = (left + right) / 2;
-	MergeSort(v, left, mid);
-	MergeSort(v, mid + 1, right);
+	MergeSort(v, left, mid, 2);
+	MergeSort(v, mid + 1, right, 2);
 
 	MergeResult(v, left, mid, right);
+}
+
+void MergeSort(vector<int>& v, int left, int right)
+{
+	if (left >= right) return;		// 2개 이상 남지 않았을 때 그만
+
+	int mid = (right + left) / 2;	// 좌측 + 우측 / 2 중간 인덱스
+	int leftIdx = left;				// 탐색은 좌측에서 우측으로
+	int rightIdx = mid + 1;			// 탐색은 좌측에서 우측으로
+	vector<int> temp;				// 정복 과정에서 병합할 임시 벡터
+
+	MergeSort(v, left, mid);		// 좌측에서 중간까지 분할
+	MergeSort(v, mid + 1, right);	// 중간 다음 부터 우측 까지 분할
+	// 분할된 갑들이 정복되어 나오면
+
+	// 분할된 좌우 시작부터 각 끝까지 
+	// 좌우 값을 비교해서 비교에 따라 데이터 복사
+	// 둘중 하나라도 끝까지 갈때 까지 반복
+	while (leftIdx <= mid && rightIdx <= right)
+	{
+		// 비교는 작은 순
+		if (v[leftIdx] < v[rightIdx])	// 비교 값 찾아서 
+		{
+			temp.push_back(v[leftIdx]); // 데이터 복사
+			leftIdx++;					// 다음 비교 인덱스로++
+		}
+		else
+		{
+			temp.push_back(v[rightIdx]);
+			rightIdx++;
+		}
+	}
+	// 좌우중 하나 먼저 되어서 빠져나오면
+	
+	// 탐색 못한 값 넣어주기
+	while (leftIdx <= mid)
+	{
+		temp.push_back(v[leftIdx]);
+		leftIdx++;
+	}
+	while (rightIdx <= right)
+	{
+		temp.push_back(v[rightIdx]);
+		rightIdx++;
+	}
+
+	// 정렬된 값 복사
+	// 구간 left ~ right 사이이므로 left 시작 right 끝이된다
+	for (int i = 0; i < temp.size(); i++)
+		v[left + i] = temp[i];
 }
 
 int Partition(vector<int>& v, int left, int right)
@@ -367,17 +416,24 @@ private:
 
 int main()
 {
-	DisjointSet teams(1000);
+	//DisjointSet teams(1000);
 
-	teams.Merge(10, 1);
-	int teamID = teams.Find(1);
-	int teamID2 = teams.Find(10);
+	//teams.Merge(10, 1);
+	//int teamID = teams.Find(1);
+	//int teamID2 = teams.Find(10);
 
-	teams.Merge(3, 2);
-	int teamID3 = teams.Find(3);
-	int teamID4 = teams.Find(2);
+	//teams.Merge(3, 2);
+	//int teamID3 = teams.Find(3);
+	//int teamID4 = teams.Find(2);
 
-	teams.Merge(1, 3);
-	int teamID5 = teams.Find(1);
-	int teamID6 = teams.Find(3);
+	//teams.Merge(1, 3);
+	//int teamID5 = teams.Find(1);
+	//int teamID6 = teams.Find(3);
+
+	vector<int> v = { 10, 3, 7, 1, 9 };;
+	MergeSort(v, 0, v.size() - 1);
+	for (int i = 0; i < v.size(); i++)
+	{
+		cout << v[i] << endl;
+	}
 }

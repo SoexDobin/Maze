@@ -1,44 +1,125 @@
 ﻿#include <iostream>
 #include <vector>
-#include <algorithm>
+#include <string>
 using namespace std;
 
-bool binary_search(const vector<int>& v, int x)
+class Node
 {
-	int low = 0, high = v.size() - 1;
-	while (low <= high)
+public:
+	Node() {};
+	~Node() {};
+
+	int data = 0;
+	Node* prev = nullptr;
+	Node* next = nullptr;
+};
+
+class Queue
+{
+public:
+	Queue() : _size(0), _front(nullptr), _back(nullptr) {}
+	void push(const int& value)
 	{
-		int mid = low + (high - low) / 2;
-		if (v[mid] == x) return true;
-		if (v[mid] < x) low = mid + 1;
-		else high = mid - 1;
+		if (_size == 0)
+		{
+			Node* n = new Node();
+			n->data = value;
+			_front = n;
+			_back = n;
+			_size++;
+			return;
+		}
+		
+		Node* n = new Node();
+		n->data = value;
+		n->prev = _back;
+		_back->next = n;
+		_back = n;
+		_size++;
 	}
-	return 0;
-}
+
+	void pop()
+	{
+		if (_front == nullptr)
+		{
+			cout << -1 << "\n";
+			return;
+		}
+
+		cout << _front->data << "\n";
+		Node* temp = _front;
+		_front = _front->next;
+
+		delete temp;
+		_size--;
+
+		if (_front == nullptr)
+			_back = nullptr;
+	}
+
+	void front()
+	{
+		if (_front == nullptr)
+		{
+			cout << -1 << "\n";
+			return;
+		}
+			
+		cout << _front->data << "\n";
+	}
+	void back()
+	{
+		if (_back == nullptr)
+		{
+			cout << -1 << "\n";
+			return;
+		}
+
+		cout << _back->data << "\n";
+	}
+
+	void size() { cout << _size << "\n"; }
+
+	void empty()
+	{
+		if (_size == 0)
+			cout << 1 << "\n";
+		else 
+			cout << 0 << "\n";
+	}
+
+private:
+	int _size = 0;
+	Node* _front;
+	Node* _back;
+};
 
 int main() 
 {
-	cin.tie(nullptr);
-	ios_base::sync_with_stdio(false);
+	Queue q;
+	int t;
+	string s;
+	cin >> t;
+	for (int i = 0; i < t; i++)
+	{
+		cin >> s;
 
-	vector<int> v;
-	int size;
-	cin >> size;
-	v.resize(size);
-	for (int i = 0; i < size; i++)
-	{
-		int x;
-		cin >> x;
-		v[i] = x;
+		if (s == "push")
+		{
+			int x;
+			cin >> x;
+			q.push(x);
+		}
+		else if (s == "pop")
+			q.pop();
+		else if (s == "front")
+			q.front();
+		else if (s == "back")
+			q.back();
+		else if (s == "empty")
+			q.empty();
+		else if (s == "size")
+			q.size();
 	}
-	::sort(v.begin(), v.end());
-	cin >> size;
-	for (int i = 0; i < size; i++)
-	{
-		int x;
-		cin >> x;
-		cout << binary_search(v, x) << "\n";
-	}
+
 }
-
-

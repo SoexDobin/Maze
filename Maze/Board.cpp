@@ -2,6 +2,10 @@
 #include "Board.h"
 #include "Player.h"
 #include "ConsoleHelper.h"
+#include "DisjointSet.h"
+
+#include "algorithm"
+using namespace std;
 
 const char* TILE = "■";
 
@@ -56,38 +60,54 @@ void Board::GenerateMap()
         }
     }
 
-    // 랜덤으로 우측 혹은 아래로 길을 뚫는 작업
+    vector<CostEdge> edges;
+
+    // edges 후보를 랜덤 cost로 등록한다.
     for (int32 y = 0; y < _size; y++)
     {
         for (int32 x = 0; x < _size; x++)
         {
             if (x % 2 == 0 || y % 2 == 0)
                 continue;
-            if (y == _size - 2 && x == _size - 2)
-                continue;
 
-            if (y == _size - 2)
+            // 우측 연결하는 간선 후보 // [][벽][][벽] => [][][][벽]
+            if (x < _size - 2)
             {
-                _tile[y][x + 1] = TileType::EMPTY;
-                continue;
+                const int32 randValue = ::rand() % 100;
+                edges.push_back(CostEdge{ randValue, Pos{y, x} , Pos{y, x + 2} });
             }
 
-            if (x == _size - 2)
+            // 아래 연결하는 간선 후보
+            if (y < _size - 2)
             {
-                _tile[y + 1][x] = TileType::EMPTY;
-                continue;
-            }
-
-            const int32 randValue = ::rand() % 2;
-            if (randValue == 0)
-            {
-                _tile[y][x + 1] = TileType::EMPTY;
-            } 
-            else
-            {
-                _tile[y + 1][x] = TileType::EMPTY;
+                const int32 randValue = ::rand() % 100;
+                edges.push_back(CostEdge{ randValue, Pos{y, x}, Pos{y + 2, x} });
             }
         }
+    }
+
+    std::sort(edges.begin(), edges.end());
+
+    DisjointSet sets(_size * _size);
+
+    for (CostEdge& edge : edges)
+    {
+        // [0,0][0,1][0,2][0,3]
+        // [1,0][1,1][1,2][1,3]
+        int u = edge.u.y * _size + edge.u.x;
+        int v = edge.v.y * _size + edge.v.x;
+        // 같은 그룹이면 스킵 (안그러면 사이클 발생)
+        if (sets.Find(u) == sets.Find(v))
+            continue;
+
+        // 두 그룹을 합친다.
+        sets.Merge(u, v);
+
+        // 맵에 적용
+        // [u][wall][v] => [u][][v]
+        int y = (edge.u.y + edge.v.y) / 2;
+        int x = (edge.u.x + edge.v.x) / 2;
+        _tile[y][x] = TileType::EMPTY;
     }
 }
 

@@ -216,8 +216,8 @@ void Player::AStar()
 
 	enum
 	{
-		//DIR_COUNT = 4, // 직각 이동
-		DIR_COUNT = 8, // 대각선 이동
+		DIR_COUNT = 4, // 직각 이동
+		//DIR_COUNT = 8, // 대각선 이동
 	};
 
 	Pos front[] = {

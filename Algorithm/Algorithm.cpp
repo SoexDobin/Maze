@@ -1,372 +1,7 @@
 ﻿#include <iostream>
 #include <vector>
-#include <queue>
+#include <algorithm>
 using namespace std;
-
-void BubbleSort(vector<int>& v)
-{
-	const int size = static_cast<int>(v.size());
-
-	for (int i = 0; i < size - 1; i++)
-	{
-		for (int j = 0; j < (size - 1 - i); j++)
-		{
-			if (v[j] > v[j + 1])
-				::swap(v[j], v[j + 1]);
-		}
-	}
-}
-
-void SelectionSort(vector<int>& v)
-{
-	const int size = static_cast<int>(v.size());
-
-	for (int i = 0; i < size - 1; i++) 
-	{
-		int leastIndex = i;
-		for (int j = i + 1; j < size; j++)
-		{
-			if (v[j] < v[leastIndex])
-				leastIndex = j;
-		}
-		::swap(v[i], v[leastIndex]);
-	}
-}
-
-void InsertionSort(vector<int>& v)
-{
-	const int size = static_cast<int>(v.size());
-	
-	for (int i = 1; i < size; i++)
-	{
-		int insertData = v[i];
-
-		int j;
-		for (j = i - 1; j >= 0; j--)
-		{
-			if (v[j] > insertData)
-				v[j + 1] = v[j];
-			else
-				break;
-		}
-		v[j + 1] = insertData;
-	}
-}
-
-void HeapSort(vector<int>& v)
-{
-	priority_queue<int, vector<int>, greater<int>> pq;
-	
-	for (int n : v)
-		pq.push(n);
-
-	v.clear();
-
-	while(pq.empty() == false)
-	{
-		v.push_back(pq.top());
-		pq.pop();
-	}
-}
-
-// [3][k][7][2][j][4][8][9]
-// 분할 [3][k][7][2] : [j][4][8][9]
-// 정복 [2][3][7][k] : [4][8][9][j]
-// 결합 [2][3][4][7][8][9][j][k]
-
-// void Merge(vector<int>& a, vector<int>& b)
-// {
-//		vector<int> temp;
-//      //????
-//		return temp;
-// }
-void MergeResult(vector<int>& v, int left, int mid, int right)
-{
-	int leftIdx = left;
-	int rightIdx = mid + 1;
-	vector<int> temp;
-	while (leftIdx <= mid && rightIdx <= right)
-	{
-		if (v[leftIdx] <= v[rightIdx])
-		{
-			temp.push_back(v[leftIdx]);
-			leftIdx++;
-		}
-		else
-		{
-			temp.push_back(v[rightIdx]);
-			rightIdx++;
-		}
-	}
-
-	// 왼쪽이 먼저 끝났으면 , 오른쪽 나머지 데이터 복사
-	if (leftIdx > mid)
-	{
-		while (rightIdx <= right)
-		{
-			temp.push_back(v[rightIdx]);
-			rightIdx++;
-		}
-	}
-	// 오른쪽이 먼저 끝났으면 , 왼쪽 나머지 데이터 복사
-	else
-	{
-		while (leftIdx <= mid) 
-		{
-			temp.push_back(v[leftIdx]);
-			leftIdx++;
-		}
-	}
-
-	for (int i = 0; i < temp.size(); i++)
-		v[left + i] = temp[i];
-};
-
-void MergeSort(vector<int>& v, int left, int right, int a)
-{
-	if (left >= right)
-		return;
-
-	int mid = (left + right) / 2;
-	MergeSort(v, left, mid, 2);
-	MergeSort(v, mid + 1, right, 2);
-
-	MergeResult(v, left, mid, right);
-}
-
-void MergeSort(vector<int>& v, int left, int right)
-{
-	if (left >= right) return;		// 2개 이상 남지 않았을 때 그만
-
-	int mid = (right + left) / 2;	// 좌측 + 우측 / 2 중간 인덱스
-	int leftIdx = left;				// 탐색은 좌측에서 우측으로
-	int rightIdx = mid + 1;			// 탐색은 좌측에서 우측으로
-	vector<int> temp;				// 정복 과정에서 병합할 임시 벡터
-
-	MergeSort(v, left, mid);		// 좌측에서 중간까지 분할
-	MergeSort(v, mid + 1, right);	// 중간 다음 부터 우측 까지 분할
-	// 분할된 갑들이 정복되어 나오면
-
-	// 분할된 좌우 시작부터 각 끝까지 
-	// 좌우 값을 비교해서 비교에 따라 데이터 복사
-	// 둘중 하나라도 끝까지 갈때 까지 반복
-	while (leftIdx <= mid && rightIdx <= right)
-	{
-		// 비교는 작은 순
-		if (v[leftIdx] < v[rightIdx])	// 비교 값 찾아서 
-		{
-			temp.push_back(v[leftIdx]); // 데이터 복사
-			leftIdx++;					// 다음 비교 인덱스로++
-		}
-		else
-		{
-			temp.push_back(v[rightIdx]);
-			rightIdx++;
-		}
-	}
-	// 좌우중 하나 먼저 되어서 빠져나오면
-	
-	// 탐색 못한 값 넣어주기
-	while (leftIdx <= mid)
-	{
-		temp.push_back(v[leftIdx]);
-		leftIdx++;
-	}
-	while (rightIdx <= right)
-	{
-		temp.push_back(v[rightIdx]);
-		rightIdx++;
-	}
-
-	// 정렬된 값 복사
-	// 구간 left ~ right 사이이므로 left 시작 right 끝이된다
-	for (int i = 0; i < temp.size(); i++)
-		v[left + i] = temp[i];
-}
-
-int Partition(vector<int>& v, int left, int right)
-{
-	int pivot = v[left];
-	int low = left + 1;
-	int high = right;
-	// O(NlogN)
-	while (low <= high)
-	{
-		while (low <= right && pivot >= v[low])
-			low++;
-
-		while (high >= left + 1 && pivot <= v[high])
-			high--;
-
-		if (low < high)
-			::swap(v[low], v[high]);
-	}
-
-	::swap(v[left], v[high]);
-	return high;
-}
-void QuickSort(vector<int>& v, int left, int right)
-{
-	if (left > right)
-		return;
-	int pivot = Partition(v, left, right);
-	QuickSort(v, left, pivot - 1);
-	QuickSort(v, pivot + 1, right);
-}
-
-void TestTable()
-{
-	struct User
-	{
-		int userID = 0; // 1~999
-		string username;
-	};
-
-	vector<User> users;
-	users.resize(1000);
-
-	// write
-	users[777] = User{ 777, "Rookiss" };
-	// read
-	string name = users[777].username;
-	cout << name << endl;
-
-	// 테이블
-	// 키를 알면, 데이터를 단번에 찾을 수 있다
-}
-
-void TestHash()
-{
-	struct User
-	{
-		int userID = 0; // 1~int32_max
-		string username;
-	};
-
-	vector<User> users;
-	users.resize(1000);
-
-	const int userID = 123456789;
-	int key = (userID % 1000);
-	users[key] = User{ userID, "Rookiss" };
-	
-	User& user = users[key];
-	if (user.userID == userID) 
-	{
-		string name = users[key].username;
-		cout << name << endl;
-	}
-		
-
-	// 테이블
-	// 키를 알면, 데이터를 단번에 찾을 수 있다
-}
-
-// 충돌 문제
-// 충돌이 발생한 자리를 대신해서 다른 빈자리를 찾아나서면 된다
-// - 선형 조사법 (linear probing)
-// 이미 키값이 존재하면 다음 자리에 저장한다.
-// - 이차 조사법 (quadratic probing)
-// 이미 키값이 존재하면 n^2 만큼 자리에 저장한다.
-
-// 충돌이 나거나 배열 테이블 자체에 자리가 없을때
-// 채이닝 
-// 각 테이블 배열자체가 또한 배열, 연결 리스트 형식으로 되어서 다른 데이터를 가지는 것
-
-void TestHashTableChaining()
-{
-	struct User
-	{
-		int userID = 0; // 1~int32_max
-		string username;
-	};
-
-	vector<vector<User>> users;
-	users.resize(1000);
-
-	const int userID = 123456789;
-	int key = (userID % 1000);
-	// 채이닝
-	users[key].push_back(User{ userID, "Rookiss" });
-	users[key].push_back(User{ userID, "Faker" });
-
-	vector <User>& bucket = users[key];
-	for (User& user : bucket)
-	{
-		if (user.userID == userID)
-		{
-			string name = user.username;
-			cout << name << endl;
-		}
-	}
-}
-
-void LineageBattleground()
-{
-	struct User {
-		int teamID;
-
-	};
-
-	vector<User> users;
-	for (int i = 0; i < 1000; i++)
-	{
-		users.push_back(User{ i });
-	}
-
-	users[5].teamID = users[1].teamID;
-
-	for (User& user : users)
-	{
-		if (user.teamID == 1)
-			user.teamID = 2;
-	}
-}
-// 트리 구조를 이용한 상호 베타적 집합의 표현
-// [0] [1] [2] [3] [4]
-
-struct Node
-{
-	Node* leader;
-
-};
-
-class NaiveDisjointSet
-{
-public:
-	NaiveDisjointSet(int n) : _parent(n)
-	{
-		for (int i = 0; i < n; i++)
-			_parent[i] = i;
-	};
-
-	// 팀 리더 서치
-	int Find(int u)
-	{
-		if (u == _parent[u])
-			return u;
-
-		return Find(_parent[u]);
-	}
-
-	// u가 v 밑으로
-	void Merge(int u, int v)
-	{
-		u = Find(u);
-		v = Find(v);
-
-		// 같은 팀 이면
-		if (u == v) 
-			return;
-
-		_parent[u] = v;
-	}
-
-private:
-	vector<int> _parent;
-};
-
-
 
 // 트리가 한쪽으로 기우는 문제를 해결
 // 트리를 합칠 때, 항상 [높이가 낮은 트리를] [높이가 높은 트리] 밑으로
@@ -413,27 +48,83 @@ private:
 	vector<int> _rank;
 };
 
+struct Vertex
+{
+
+};
+
+vector<Vertex> vertices;
+vector<vector<int>> adjacent; // 인접 행렬
+
+void CreateGraph()
+{
+	vertices.resize(6);
+	adjacent = vector<vector<int>>(6, vector<int>(6, -1));
+
+	adjacent[0][1] = adjacent[1][0] = 15;
+	adjacent[0][3] = adjacent[3][0] = 35;
+	adjacent[1][2] = adjacent[2][1] = 5;
+	adjacent[1][3] = adjacent[3][1] = 10;
+	adjacent[3][4] = adjacent[4][3] = 5;
+	adjacent[3][5] = adjacent[5][3] = 10;
+	adjacent[5][4] = adjacent[4][5] = 5;
+}
+
+struct CostEdge
+{
+	int cost;
+	int u;
+	int v;
+
+	bool operator<(CostEdge& other)
+	{
+		return cost < other.cost;
+	}
+};
+
+int Kruskal(vector<CostEdge>& selected)
+{
+	int ret = 0;
+	selected.clear();
+
+	// 모든 간선의 관계와 코스트 확인
+	vector<CostEdge> edges;
+	for (int u = 0; u < adjacent.size(); u++)
+	{
+		for (int v = 0; v < adjacent[u].size(); v++)
+		{
+			if(u < v)	// 양방향 그래프이기에 같은 값이면 추가하지 않음
+				continue; 
+
+			int cost = adjacent[u][v];
+			if (cost == -1)
+				continue;
+
+			edges.push_back(CostEdge{ cost, u, v });
+		}
+	}
+	std::sort(edges.begin(), edges.end());
+
+	// 그리디 알고리즘
+
+	DisjointSet sets(vertices.size());
+	for (CostEdge& edge : edges)
+	{
+		if (sets.Find(edge.u) == sets.Find(edge.v))
+			continue;
+
+		sets.Merge(edge.u, edge.v);
+		selected.push_back(edge);
+		ret += edge.cost;
+	}
+
+	return ret;
+}
 
 int main()
 {
-	//DisjointSet teams(1000);
+	CreateGraph();
 
-	//teams.Merge(10, 1);
-	//int teamID = teams.Find(1);
-	//int teamID2 = teams.Find(10);
-
-	//teams.Merge(3, 2);
-	//int teamID3 = teams.Find(3);
-	//int teamID4 = teams.Find(2);
-
-	//teams.Merge(1, 3);
-	//int teamID5 = teams.Find(1);
-	//int teamID6 = teams.Find(3);
-
-	vector<int> v = { 10, 3, 7, 1, 9 };;
-	MergeSort(v, 0, v.size() - 1);
-	for (int i = 0; i < v.size(); i++)
-	{
-		cout << v[i] << endl;
-	}
+	vector<CostEdge> selected;
+	int cost = Kruskal(selected);
 }

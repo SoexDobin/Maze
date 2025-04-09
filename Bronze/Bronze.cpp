@@ -1,125 +1,47 @@
 ﻿#include <iostream>
+#include <map>
 #include <vector>
-#include <string>
+#include <unordered_map>
 using namespace std;
 
-class Node
-{
-public:
-	Node() {};
-	~Node() {};
-
-	int data = 0;
-	Node* prev = nullptr;
-	Node* next = nullptr;
-};
-
-class Queue
-{
-public:
-	Queue() : _size(0), _front(nullptr), _back(nullptr) {}
-	void push(const int& value)
-	{
-		if (_size == 0)
-		{
-			Node* n = new Node();
-			n->data = value;
-			_front = n;
-			_back = n;
-			_size++;
-			return;
-		}
-		
-		Node* n = new Node();
-		n->data = value;
-		n->prev = _back;
-		_back->next = n;
-		_back = n;
-		_size++;
-	}
-
-	void pop()
-	{
-		if (_front == nullptr)
-		{
-			cout << -1 << "\n";
-			return;
-		}
-
-		cout << _front->data << "\n";
-		Node* temp = _front;
-		_front = _front->next;
-
-		delete temp;
-		_size--;
-
-		if (_front == nullptr)
-			_back = nullptr;
-	}
-
-	void front()
-	{
-		if (_front == nullptr)
-		{
-			cout << -1 << "\n";
-			return;
-		}
-			
-		cout << _front->data << "\n";
-	}
-	void back()
-	{
-		if (_back == nullptr)
-		{
-			cout << -1 << "\n";
-			return;
-		}
-
-		cout << _back->data << "\n";
-	}
-
-	void size() { cout << _size << "\n"; }
-
-	void empty()
-	{
-		if (_size == 0)
-			cout << 1 << "\n";
-		else 
-			cout << 0 << "\n";
-	}
-
-private:
-	int _size = 0;
-	Node* _front;
-	Node* _back;
-};
+const int MAX_NUM = 500000;
 
 int main() 
 {
-	Queue q;
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+
+	
+	unordered_map<int, int> m;
 	int t;
-	string s;
 	cin >> t;
 	for (int i = 0; i < t; i++)
 	{
-		cin >> s;
-
-		if (s == "push")
-		{
-			int x;
-			cin >> x;
-			q.push(x);
-		}
-		else if (s == "pop")
-			q.pop();
-		else if (s == "front")
-			q.front();
-		else if (s == "back")
-			q.back();
-		else if (s == "empty")
-			q.empty();
-		else if (s == "size")
-			q.size();
+		int x;
+		cin >> x;
+		m.find(x);
+		
+		unordered_map<int, int>::iterator it = m.find(x);
+		if (it == m.end())
+			m.insert(pair<int, int>{ x , 1 });
+		else
+			m[x]++;
 	}
-
+	vector<int> v;
+	cin >> t;
+	v.resize(t);
+	for (int i = 0; i < t; i++)
+	{
+		int x;
+		cin >> x;
+		unordered_map<int, int>::iterator it = m.find(x);
+		if (it == m.end())
+			v[i] = 0;
+		else
+			v[i] = it->second;
+	}
+	for (int i = 0; i < t; i++)
+	{
+		cout << v[i] << " ";
+	}
 }

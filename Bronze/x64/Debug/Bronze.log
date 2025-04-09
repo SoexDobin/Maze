@@ -1,2 +1,3 @@
 ﻿  Bronze.cpp
+C:\Users\a9018\Desktop\Maze\Bronze\Bronze.cpp(22,5): warning C4834: [[nodiscard]] 특성이 포함된 함수의 반환 값을 버리는 중입니다.
   Bronze.vcxproj -> C:\Users\a9018\Desktop\Maze\x64\Debug\Bronze.exe

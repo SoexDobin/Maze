@@ -1,47 +1,41 @@
 ﻿#include <iostream>
-#include <map>
 #include <vector>
-#include <unordered_map>
 using namespace std;
-
-const int MAX_NUM = 500000;
 
 int main() 
 {
-	cin.tie(nullptr);
-	ios_base::sync_with_stdio(false);
-
-	
-	unordered_map<int, int> m;
-	int t;
-	cin >> t;
-	for (int i = 0; i < t; i++)
-	{
-		int x;
-		cin >> x;
-		m.find(x);
-		
-		unordered_map<int, int>::iterator it = m.find(x);
-		if (it == m.end())
-			m.insert(pair<int, int>{ x , 1 });
-		else
-			m[x]++;
-	}
+	int n, k;
 	vector<int> v;
-	cin >> t;
-	v.resize(t);
-	for (int i = 0; i < t; i++)
+	cin >> n >> k;
+	v.resize(n);
+	for (int i = 0; i < n; i++)
 	{
-		int x;
-		cin >> x;
-		unordered_map<int, int>::iterator it = m.find(x);
-		if (it == m.end())
-			v[i] = 0;
-		else
-			v[i] = it->second;
+		v[i] = i + 1;
 	}
-	for (int i = 0; i < t; i++)
+	int acc = k - 1;
+	int prev = 0;
+	int size = n;
+	vector<int>::iterator it = v.begin() + acc + prev;
+	vector<int> v2;
+
+	while (true)
 	{
-		cout << v[i] << " ";
+		v2.push_back(*it);
+		v.erase(it);
+
+		size--;
+		if (size == 0) break;
+
+		prev = acc - 1;
+		acc = (k + prev) % (size);
+		it = v.begin() + acc;
 	}
+
+	vector<int>::iterator yo;
+	cout << "<";
+	for (yo = v2.begin(); yo != v2.end() - 1; yo++)
+	{
+		cout << *yo << ", ";
+	}
+	cout << *(v2.end() - 1) <<">";
 }

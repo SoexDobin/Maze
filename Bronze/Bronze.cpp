@@ -1,41 +1,70 @@
 ﻿#include <iostream>
 #include <vector>
+#include <queue>
+#include <algorithm>
 using namespace std;
+
+void DFS(vector<vector<int>>& v, vector<bool>& visited, const int& next, const int& range)
+{
+	if (visited[next]) return;
+	cout << next << " ";
+	
+	visited[next] = true;
+
+	for (int i = 1; i < range; i++)
+	{
+		if (v[next][i] != 0)
+			DFS(v, visited, v[next][i], range);
+	}
+}
+
+void BFS(vector<vector<int>>& v, vector<bool>& visited, const int& next, const int& range)
+{
+	cout << "\n" << next << " ";
+	if (visited[next]) return;
+	queue<int> q;
+	
+	visited[next] = true;
+	q.push(next);
+	while (!q.empty())
+	{
+		for (int i = 1; i < range; i++)
+		{
+			if (visited[v[q.front()][i]]) continue;
+			if (v[q.front()][i] != 0)
+			{
+				visited[v[q.front()][i]] = true;
+				cout << v[q.front()][i] << " ";
+				q.push(v[q.front()][i]);
+			}
+		}
+		q.pop();
+	}
+}
 
 int main() 
 {
-	int n, k;
-	vector<int> v;
-	cin >> n >> k;
-	v.resize(n);
-	for (int i = 0; i < n; i++)
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+
+	int n, m, t;
+	cin >> n >> m >> t;
+	vector<vector<int>> v(n + 1, vector<int>(n + 1, 0));
+	vector<bool> visited(n + 1, true);
+	visited[t] = false;
+	for (int i = 1; i <= m; i++)
 	{
-		v[i] = i + 1;
-	}
-	int acc = k - 1;
-	int prev = 0;
-	int size = n;
-	vector<int>::iterator it = v.begin() + acc + prev;
-	vector<int> v2;
-
-	while (true)
-	{
-		v2.push_back(*it);
-		v.erase(it);
-
-		size--;
-		if (size == 0) break;
-
-		prev = acc - 1;
-		acc = (k + prev) % (size);
-		it = v.begin() + acc;
+		int from, to;
+		cin >> from >> to;
+		v[from][to] = to;
+		v[to][from] = from;
+		visited[from] = false;
+		visited[to] = false;
 	}
 
-	vector<int>::iterator yo;
-	cout << "<";
-	for (yo = v2.begin(); yo != v2.end() - 1; yo++)
-	{
-		cout << *yo << ", ";
-	}
-	cout << *(v2.end() - 1) <<">";
+	vector<vector<int>> temp = v;
+	vector<bool> visitedTemp = visited;
+
+	DFS(v, visited, t, n + 1);
+	BFS(temp, visitedTemp, t, n + 1);
 }

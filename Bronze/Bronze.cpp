@@ -1,70 +1,74 @@
 ﻿#include <iostream>
 #include <vector>
-#include <queue>
-#include <algorithm>
+#include <string>
 using namespace std;
-
-void DFS(vector<vector<int>>& v, vector<bool>& visited, const int& next, const int& range)
-{
-	if (visited[next]) return;
-	cout << next << " ";
-	
-	visited[next] = true;
-
-	for (int i = 1; i < range; i++)
-	{
-		if (v[next][i] != 0)
-			DFS(v, visited, v[next][i], range);
-	}
-}
-
-void BFS(vector<vector<int>>& v, vector<bool>& visited, const int& next, const int& range)
-{
-	cout << "\n" << next << " ";
-	if (visited[next]) return;
-	queue<int> q;
-	
-	visited[next] = true;
-	q.push(next);
-	while (!q.empty())
-	{
-		for (int i = 1; i < range; i++)
-		{
-			if (visited[v[q.front()][i]]) continue;
-			if (v[q.front()][i] != 0)
-			{
-				visited[v[q.front()][i]] = true;
-				cout << v[q.front()][i] << " ";
-				q.push(v[q.front()][i]);
-			}
-		}
-		q.pop();
-	}
-}
 
 int main() 
 {
-	cin.tie(nullptr);
-	ios_base::sync_with_stdio(false);
-
-	int n, m, t;
-	cin >> n >> m >> t;
-	vector<vector<int>> v(n + 1, vector<int>(n + 1, 0));
-	vector<bool> visited(n + 1, true);
-	visited[t] = false;
-	for (int i = 1; i <= m; i++)
+	// 1 white 0 black
+	vector<vector<int>> v;
+	int x, y;
+	cin >> y >> x;
+	v.resize(y);
+	for (int i = 0; i < y; i++)
 	{
-		int from, to;
-		cin >> from >> to;
-		v[from][to] = to;
-		v[to][from] = from;
-		visited[from] = false;
-		visited[to] = false;
+		string s;
+		cin >> s;
+		for (char c : s)
+		{
+			if (c == 'W')
+				v[i].push_back(1);
+			else
+				v[i].push_back(-1);
+		}
 	}
 
-	vector<vector<int>> temp = v;
-	vector<bool> visitedTemp = visited;
+	// W 시작일 때 칠하기 개수
+	// B 시작일 때 칠하기 개수
 
-	DFS(v, visited, t, n + 1);
-	BFS(temp, visitedTemp, t, n + 1);
+	int yPos = 0, xPos = 0;
+	int leastCount = INT32_MAX;
+	while (true)
+	{
+		int startWhiteAcc = 0;
+		int startBlackAcc = 0;
+		int whiteToggle = 1;
+		int blackToggle = -1;
+		for (int i = yPos; i < yPos + 8; i++)
+		{
+			for (int j = xPos; j < xPos + 8; j++) 
+			{
+				if (v[i][j] != whiteToggle)
+					startWhiteAcc++;
+				
+				if (v[i][j] != blackToggle)
+					startBlackAcc++;
+				
+				whiteToggle *= -1;
+				blackToggle *= -1;
+			}
+			whiteToggle *= -1;
+			blackToggle *= -1;
+		}
+
+		if (leastCount > startWhiteAcc)
+			leastCount = startWhiteAcc;
+		if (leastCount > startBlackAcc)
+			leastCount = startBlackAcc;
+
+		int checkX = xPos + 8;
+		int checkY = yPos + 8;
+		if (checkX < x)
+			xPos++;
+		else if (checkY < y)
+		{
+			yPos++;
+			xPos = 0;
+		}
+		else
+			break;
+	}
+
+	cout << leastCount << "\n";
 }
+

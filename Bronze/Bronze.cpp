@@ -1,74 +1,75 @@
 ﻿#include <iostream>
 #include <vector>
+#include <queue>
 #include <string>
+#include <algorithm>
 using namespace std;
+
+void BFS(vector<vector<int>>& v, vector<vector<bool>>& visited)
+{
+	vector<vector<int>> acc(v.size(), vector<int>(v[0].size(), 0));
+	queue<pair<int, int>> q;
+	acc[0][0] = 1;
+	q.push(pair<int, int>{0, 0});
+	while (!q.empty())
+	{
+		pair<int, int> curPos = q.front();
+		q.pop();
+
+		int up = 0, right = 0, down = 0, left = 0;
+		if (curPos.first + 1 != v.size())
+			up = v[curPos.first + 1][curPos.second];
+		if (curPos.second + 1 != v[0].size())
+			right = v[curPos.first][curPos.second + 1];
+		if (curPos.first - 1 >= 0)
+			down = v[curPos.first - 1][curPos.second];
+		if (curPos.second - 1 >= 0)
+			left = v[curPos.first][curPos.second - 1];
+
+		if (up != 0 && visited[curPos.first + 1][curPos.second] == false)
+		{
+			q.push(pair<int, int>{curPos.first + 1, curPos.second});
+			visited[curPos.first + 1][curPos.second] = true;
+			acc[curPos.first + 1][curPos.second] += acc[curPos.first][curPos.second] + 1;
+		}
+		if (right != 0 && visited[curPos.first][curPos.second + 1] == false)
+		{
+			q.push(pair<int, int>{curPos.first, curPos.second + 1});
+			visited[curPos.first][curPos.second + 1] = true;
+			acc[curPos.first][curPos.second + 1] += acc[curPos.first][curPos.second] + 1;
+		}
+		if (down != 0 && visited[curPos.first - 1][curPos.second] == false)
+		{
+			q.push(pair<int, int>{curPos.first - 1, curPos.second});
+			visited[curPos.first - 1][curPos.second] = true;
+			acc[curPos.first - 1][curPos.second] += acc[curPos.first][curPos.second] + 1;
+		}
+		if (left != 0 && visited[curPos.first][curPos.second - 1] == false)
+		{
+			q.push(pair<int, int>{curPos.first, curPos.second - 1});
+			visited[curPos.first][curPos.second - 1] = true;
+			acc[curPos.first][curPos.second - 1] += acc[curPos.first][curPos.second] + 1;
+		}
+	}
+	cout << acc[v.size() - 1][v[0].size() - 1];
+}
 
 int main() 
 {
-	// 1 white 0 black
-	vector<vector<int>> v;
-	int x, y;
+	int y, x;
 	cin >> y >> x;
+	vector<vector<int>> v;
+	vector<vector<bool>> visited(y, vector<bool>(x, false));
 	v.resize(y);
-	for (int i = 0; i < y; i++)
-	{
-		string s;
-		cin >> s;
-		for (char c : s)
+	for (int height = 0; height < y; height++)
+	{	
+		string line;
+		cin >> line;
+		for (int width = 0; width < x; width++)
 		{
-			if (c == 'W')
-				v[i].push_back(1);
-			else
-				v[i].push_back(-1);
+			v[height].push_back(line[width] - 48);
 		}
-	}
-
-	// W 시작일 때 칠하기 개수
-	// B 시작일 때 칠하기 개수
-
-	int yPos = 0, xPos = 0;
-	int leastCount = INT32_MAX;
-	while (true)
-	{
-		int startWhiteAcc = 0;
-		int startBlackAcc = 0;
-		int whiteToggle = 1;
-		int blackToggle = -1;
-		for (int i = yPos; i < yPos + 8; i++)
-		{
-			for (int j = xPos; j < xPos + 8; j++) 
-			{
-				if (v[i][j] != whiteToggle)
-					startWhiteAcc++;
-				
-				if (v[i][j] != blackToggle)
-					startBlackAcc++;
-				
-				whiteToggle *= -1;
-				blackToggle *= -1;
-			}
-			whiteToggle *= -1;
-			blackToggle *= -1;
-		}
-
-		if (leastCount > startWhiteAcc)
-			leastCount = startWhiteAcc;
-		if (leastCount > startBlackAcc)
-			leastCount = startBlackAcc;
-
-		int checkX = xPos + 8;
-		int checkY = yPos + 8;
-		if (checkX < x)
-			xPos++;
-		else if (checkY < y)
-		{
-			yPos++;
-			xPos = 0;
-		}
-		else
-			break;
-	}
-
-	cout << leastCount << "\n";
+	}	
+	BFS(v, visited);
 }
 

@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\a9018\\Desktop\\Maze\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Bronze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|solutionrelative:Bronze\\Bronze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|solutionrelative:Bronze\\Silver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\DisjointSet.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -71,12 +71,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Bronze.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Bronze.cpp",
-              "RelativeDocumentMoniker": "Bronze\\Bronze.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Bronze.cpp",
-              "RelativeToolTip": "Bronze\\Bronze.cpp",
-              "ViewState": "AgIAABQAAAAAAAAAAAAkwCoAAAADAAAAAAAAAA==",
+              "Title": "Silver.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp",
+              "RelativeDocumentMoniker": "Bronze\\Silver.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp",
+              "RelativeToolTip": "Bronze\\Silver.cpp",
+              "ViewState": "AgIAADYAAAAAAAAAAAAkwFgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-22T05:16:17.92Z",
               "EditorCaption": ""

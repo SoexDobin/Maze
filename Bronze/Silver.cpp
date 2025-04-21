@@ -3,86 +3,80 @@
 #include <queue>
 using namespace std;
 
-void DFS(vector<vector<int>>& v, vector<vector<bool>>& visited, const pair<int, int>& start)
+
+void TomatoBFS(vector<vector<int>>& v, queue<pair<int, int>>& q, int& tomato)
 {
-	if (visited[start.first][start.second] || v[start.first][start.second] == 0) return;
-	visited[start.first][start.second] = true;
-
-	int Ysize = v.size();
-	int Xsize = v[0].size();
-	pair<int, int> up = { start.first - 1, start.second };
-	pair<int, int> right = { start.first, start.second + 1 };
-	pair<int, int> down = { start.first + 1, start.second };
-	pair<int, int> left = { start.first, start.second - 1 };
-
-	if (up.first >= 0 && v[up.first][up.second] != 0)
-		DFS(v, visited, up);
-	if (right.second < Xsize && v[right.first][right.second] != 0)
-		DFS(v, visited, right);
-	if (down.first < Ysize && v[down.first][down.second] != 0)
-		DFS(v, visited, down);
-	if (left.second >= 0 && v[left.first][left.second] != 0)
-		DFS(v, visited, left);
-}
-
-void CabageFarm(vector<vector<int>>& v, queue<pair<int, int>>& q, vector<vector<bool>>& visited, int& cabageWorm)
-{
-	int Ysize = v.size();
-	int Xsize = v[0].size();
-	while (!q.empty())
+	int sizeY = static_cast<int>(v.size());
+	int sizeX = static_cast<int>(v[0].size());
+	pair<int, int> pos;
+	while (true)
 	{
-		pair<int, int> pos = q.front();
+		if (q.empty()) break;
+		pos = q.front();
 		q.pop();
-		if (visited[pos.first][pos.second]) continue;
-		visited[pos.first][pos.second] = true;
 
 		pair<int, int> up = {pos.first - 1, pos.second};
 		pair<int, int> right = { pos.first, pos.second + 1 };
 		pair<int, int> down = { pos.first + 1, pos.second };
-		pair<int, int> left = { pos.first, pos.second - 1};
+		pair<int, int> left = { pos.first, pos.second - 1 };
 
-		if (up.first >= 0 && v[up.first][up.second] != 0)
-			DFS(v, visited, up);
-		if (right.second < Xsize && v[right.first][right.second] != 0)
-			DFS(v, visited, right);
-		if (down.first < Ysize && v[down.first][down.second] != 0)
-			DFS(v, visited, down);
-		if (left.second >= 0 && v[left.first][left.second] != 0)
-			DFS(v, visited, left);
-
-		cabageWorm++;
+		if (up.first >= 0 && v[up.first][up.second] == 0)
+		{
+			v[up.first][up.second] = v[pos.first][pos.second] + 1;
+			q.push(up);
+		}
+		if (down.first < sizeY && v[down.first][down.second] == 0)
+		{
+			v[down.first][down.second] = v[pos.first][pos.second] + 1;
+			q.push(down);
+		}
+		if (right.second < sizeX && v[right.first][right.second] == 0)
+		{
+			v[right.first][right.second] = v[pos.first][pos.second] + 1;
+			q.push(right);
+		}
+		if (left.second >= 0 && v[left.first][left.second] == 0)
+		{
+			v[left.first][left.second] = v[pos.first][pos.second] + 1;
+			q.push(left);
+		}
+		
+		tomato--;
 	}
+
+	if (tomato == 0)
+		cout << v[pos.first][pos.second] - 1 << "\n";
+	else
+		cout << -1 << "\n";
 }
 
 int main()
 {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
-
+	
+	int tomato;
 	vector<vector<int>> v;
-	vector<vector<bool>> visited;
-
 	queue<pair<int, int>> q;
 
-	int t;
-	cin >> t;
-	for (int testCase = 0; testCase < t; testCase++)
+	int x, y;
+	cin >> x >> y;
+	v.resize(y);
+	tomato = x * y;
+	for (int i = 0; i < y; i++)
 	{
-		int cabageWorm = 0;
-		int x, y, seed;
-		cin >> x >> y >> seed;
-
-		visited = vector<vector<bool>>(y, vector<bool>(x));
-		v = vector<vector<int>>(y, vector<int>(x, 0));
-		for (int i = 0; i < seed; i++)
+		for (int j = 0; j < x; j++)
 		{
-			cin >> x >> y;
-			v[y][x] = 1;
-			q.push(pair<int, int>{y, x});
-		}
+			int t;
+			cin >> t;
+			v[i].push_back(t);
 
-		CabageFarm(v, q, visited, cabageWorm);
-		cout << cabageWorm << "\n";
+			if (t == -1)
+				tomato -= 1;
+			if (t == 1)
+				q.push(pair<int, int>{i, j});
+		}
 	}
+	TomatoBFS(v, q, tomato);
 }
 

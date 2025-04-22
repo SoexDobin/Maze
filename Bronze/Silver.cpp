@@ -3,80 +3,76 @@
 #include <queue>
 using namespace std;
 
-
-void TomatoBFS(vector<vector<int>>& v, queue<pair<int, int>>& q, int& tomato)
+void BFS(vector<vector<int>>& v, queue<pair<int, int>>& q)
 {
 	int sizeY = static_cast<int>(v.size());
 	int sizeX = static_cast<int>(v[0].size());
-	pair<int, int> pos;
-	while (true)
+	pair<int, int> dir[4] = {
+		{-1, 0},
+		{0, 1},
+		{1, 0},
+		{0, -1},
+	};
+
+	while (!q.empty())
 	{
-		if (q.empty()) break;
-		pos = q.front();
+		pair<int, int> pos = q.front();
 		q.pop();
 
-		pair<int, int> up = {pos.first - 1, pos.second};
-		pair<int, int> right = { pos.first, pos.second + 1 };
-		pair<int, int> down = { pos.first + 1, pos.second };
-		pair<int, int> left = { pos.first, pos.second - 1 };
+		for (int i = 0; i < 4; i++)
+		{
+			int y = pos.first + dir[i].first;
+			int x = pos.second + dir[i].second;
 
-		if (up.first >= 0 && v[up.first][up.second] == 0)
-		{
-			v[up.first][up.second] = v[pos.first][pos.second] + 1;
-			q.push(up);
+			if (y == sizeY || y < 0 || x == sizeX || x < 0) 
+				continue;
+
+			if (v[y][x] == 1)
+			{
+				q.push(pair<int, int>{y, x});
+				v[y][x] += v[pos.first][pos.second];
+			}
 		}
-		if (down.first < sizeY && v[down.first][down.second] == 0)
-		{
-			v[down.first][down.second] = v[pos.first][pos.second] + 1;
-			q.push(down);
-		}
-		if (right.second < sizeX && v[right.first][right.second] == 0)
-		{
-			v[right.first][right.second] = v[pos.first][pos.second] + 1;
-			q.push(right);
-		}
-		if (left.second >= 0 && v[left.first][left.second] == 0)
-		{
-			v[left.first][left.second] = v[pos.first][pos.second] + 1;
-			q.push(left);
-		}
-		
-		tomato--;
 	}
-
-	if (tomato == 0)
-		cout << v[pos.first][pos.second] - 1 << "\n";
-	else
-		cout << -1 << "\n";
 }
 
 int main()
 {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
-	
-	int tomato;
-	vector<vector<int>> v;
-	queue<pair<int, int>> q;
 
 	int x, y;
-	cin >> x >> y;
+	cin >> y >> x;
+	queue<pair<int, int>> q;
+	vector<vector<int>> v;
 	v.resize(y);
-	tomato = x * y;
+
 	for (int i = 0; i < y; i++)
 	{
 		for (int j = 0; j < x; j++)
 		{
-			int t;
-			cin >> t;
-			v[i].push_back(t);
-
-			if (t == -1)
-				tomato -= 1;
-			if (t == 1)
+			int n;
+			cin >> n;
+			v[i].push_back(n);
+			if (n == 2)
 				q.push(pair<int, int>{i, j});
 		}
 	}
-	TomatoBFS(v, q, tomato);
+	
+	BFS(v, q);
+	for (int i = 0; i < y; i++)
+	{
+		for (int j = 0; j < x; j++)
+		{
+			int n = v[i][j];
+			if (n == 0)
+				cout << n << " ";
+			else if (n == 1) 
+				cout << -1 << " ";
+			else
+				cout << n - 2 << " ";
+		}
+		cout << "\n";
+	}
 }
 

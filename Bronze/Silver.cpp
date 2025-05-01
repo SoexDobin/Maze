@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <unordered_map>
+#include <deque>
 #include <string>
 #include <cstring>
 using namespace std;
@@ -9,45 +9,102 @@ int main()
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 	
-	unordered_map<int, int> m;
-
-	int n, length;
-	string s;
-	cin >> n;
-	cin >> length;
-	cin >> s;
-
-	string p;
-	for (int i = 0; i < n; i++)
+	deque<string> deq;
+	
+	int t;
+	cin >> t;
+	for (int tc = 0; tc < t; tc++)
 	{
-		p.append("IO");
-	}
-	p.append(1, 'I');
-
-	int acc = 0;
-	int idx = 0;
-	while (true)
-	{
-		if (s[idx] == 'O')
+		bool callErr = false;
+		int toggle = 1;
+		int x;
+		string p;
+		string n;
+		cin >> p;
+		cin >> x;
+		cin >> n;
+		int from = 1;
+		for (int i = 1; i < n.size(); i++)
 		{
-			idx++;
+			if (n[i] == ']')
+			{
+				deq.push_back(n.substr(from, i - from));
+				break;
+			}
+			if (n[i] == ',')
+			{
+				deq.push_back(n.substr(from, i - from));
+				from = i + 1;
+			}				
+		}
+
+		for (int i = 0; i < p.size(); i++)
+		{
+			int arrlen = n.length();
+			if ('R' == p[i])
+			{
+				toggle *= -1;
+			}
+			else 
+			{
+				if (deq.empty()) 
+				{
+					callErr = true;
+					break;
+				}
+				else if (deq[0] == "")
+				{
+					callErr = true;
+					break;
+				}
+
+				if (toggle < 0)
+				{
+					string s = deq.back();
+					deq.pop_back();
+				}
+				else 
+				{
+					string s = deq.front();
+					deq.pop_front();
+				}
+			}
+		}
+
+		if (callErr)
+		{
+			cout << "error" << "\n";
+			deq.clear();
 			continue;
 		}
 
-		int to = (n * 2) + 1;
-		if (idx + to > length) break;
-
-		string comp = s.substr(idx, to);
-		int isSame = strcmp(comp.c_str(), p.c_str());
-
-		if (isSame == 0)
+		int size = static_cast<int>(deq.size());
+		cout << "[";
+		if (deq.empty()) 
 		{
-			idx += 2;
-			acc++;
+			cout << "]" << "\n";
+			deq.clear();
+			continue;
+		}
+			
+		if (toggle < 0)
+		{
+			for (int i = size - 1; i > 0; i--)
+			{
+				cout << deq[i] << ",";
+			}
+			cout << deq[0];
 		}
 		else
-			idx++;
+		{
+			for (int i = 0; i < size - 1; i++)
+			{
+				cout << deq[i] << ",";
+			}
+			cout << deq[size - 1];
+		}
+		cout << "]" << "\n";
+		deq.clear();
 	}
-	cout << acc;
 }
 

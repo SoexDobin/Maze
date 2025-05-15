@@ -1,110 +1,73 @@
 ﻿#include <iostream>
-#include <deque>
-#include <string>
-#include <cstring>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 int main()
 {
-	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 	
-	deque<string> deq;
-	
-	int t;
-	cin >> t;
-	for (int tc = 0; tc < t; tc++)
+	string str_buffer;
+	getline(cin, str_buffer);
+	while (str_buffer[0] != '.')
 	{
-		bool callErr = false;
-		int toggle = 1;
-		int x;
-		string p;
-		string n;
-		cin >> p;
-		cin >> x;
-		cin >> n;
-		int from = 1;
-		for (int i = 1; i < n.size(); i++)
+		bool is = true;
+		vector<char> v;
+		for (int i = 0; str_buffer[i] != '\0'; i++)
 		{
-			if (n[i] == ']')
+			switch (str_buffer[i])
 			{
-				deq.push_back(n.substr(from, i - from));
+			case '[':
+				v.push_back('[');
 				break;
-			}
-			if (n[i] == ',')
-			{
-				deq.push_back(n.substr(from, i - from));
-				from = i + 1;
-			}				
-		}
-
-		for (int i = 0; i < p.size(); i++)
-		{
-			int arrlen = n.length();
-			if ('R' == p[i])
-			{
-				toggle *= -1;
-			}
-			else 
-			{
-				if (deq.empty()) 
+			case '(':
+				v.push_back('(');
+				break;
+			case ']':
 				{
-					callErr = true;
+					if (v.empty())
+					{
+						is = false;
+						break;
+					}
+					char last = v.back();
+					if (last != '[')
+					{
+						is = false;
+						break;
+					}
+					v.pop_back();
 					break;
 				}
-				else if (deq[0] == "")
+			case ')':
 				{
-					callErr = true;
+					if (v.empty())
+					{
+						is = false;
+						break;
+					}
+					char last = v.back();
+					if (last != '(')
+					{
+						is = false;
+						break;
+					}
+					v.pop_back();
 					break;
 				}
-
-				if (toggle < 0)
-				{
-					string s = deq.back();
-					deq.pop_back();
-				}
-				else 
-				{
-					string s = deq.front();
-					deq.pop_front();
-				}
 			}
+			if (is == false)
+				break;
 		}
+		if (v.empty() != true)
+			is = false;
 
-		if (callErr)
-		{
-			cout << "error" << "\n";
-			deq.clear();
-			continue;
-		}
-
-		int size = static_cast<int>(deq.size());
-		cout << "[";
-		if (deq.empty()) 
-		{
-			cout << "]" << "\n";
-			deq.clear();
-			continue;
-		}
-			
-		if (toggle < 0)
-		{
-			for (int i = size - 1; i > 0; i--)
-			{
-				cout << deq[i] << ",";
-			}
-			cout << deq[0];
-		}
+		if (is)
+			cout << "yes" << "\n";
 		else
-		{
-			for (int i = 0; i < size - 1; i++)
-			{
-				cout << deq[i] << ",";
-			}
-			cout << deq[size - 1];
-		}
-		cout << "]" << "\n";
-		deq.clear();
+			cout << "no" << "\n";
+		getline(cin, str_buffer);
 	}
 }
 

@@ -1,73 +1,45 @@
 ﻿#include <iostream>
-#include <sstream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
+	int t;
+	vector<int> dp(1000000 + 1, INT32_MAX);
+	queue<int> q;
+	dp[1] = 0;
+	cin >> t;
+	q.push(1);
 	
-	string str_buffer;
-	getline(cin, str_buffer);
-	while (str_buffer[0] != '.')
+	while (!q.empty())
 	{
-		bool is = true;
-		vector<char> v;
-		for (int i = 0; str_buffer[i] != '\0'; i++)
+		int cur = q.front();
+		q.pop();
+		int mulThree = cur * 3;
+		int mulTwo = cur * 2;
+		int addOne = cur + 1;
+		
+		if (mulThree <= t && dp[mulThree] > dp[cur] + 1)
 		{
-			switch (str_buffer[i])
-			{
-			case '[':
-				v.push_back('[');
-				break;
-			case '(':
-				v.push_back('(');
-				break;
-			case ']':
-				{
-					if (v.empty())
-					{
-						is = false;
-						break;
-					}
-					char last = v.back();
-					if (last != '[')
-					{
-						is = false;
-						break;
-					}
-					v.pop_back();
-					break;
-				}
-			case ')':
-				{
-					if (v.empty())
-					{
-						is = false;
-						break;
-					}
-					char last = v.back();
-					if (last != '(')
-					{
-						is = false;
-						break;
-					}
-					v.pop_back();
-					break;
-				}
-			}
-			if (is == false)
-				break;
+			dp[mulThree] = dp[cur] + 1; 
+			q.push(mulThree);
 		}
-		if (v.empty() != true)
-			is = false;
-
-		if (is)
-			cout << "yes" << "\n";
-		else
-			cout << "no" << "\n";
-		getline(cin, str_buffer);
+		if (mulTwo <= t && dp[mulTwo] > dp[cur] + 1)
+		{
+			dp[mulTwo] = dp[cur] + 1; 
+			q.push(mulTwo);
+		}
+		if (addOne <= t && dp[addOne] > dp[cur] + 1)
+		{
+			dp[addOne] = dp[cur] + 1; 
+			q.push(addOne);
+		}
 	}
+
+	cout << dp[t] << '\n';
+	return 0;
 }
 

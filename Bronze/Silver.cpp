@@ -1,45 +1,35 @@
 ﻿#include <iostream>
 #include <vector>
-#include <queue>
 using namespace std;
+
+int t;
+vector<int> v;
+void dp(const int n)
+{
+	for (int next : {n + 1, n + 2})
+	{
+		if (next > t) continue;
+
+		v[next]++;
+		dp(next);
+	}
+}
 
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
-	int t;
-	vector<int> dp(1000000 + 1, INT32_MAX);
-	queue<int> q;
-	dp[1] = 0;
+
 	cin >> t;
-	q.push(1);
+	v = vector<int>(t + 1, 0);
+	v[1] += 1;
+	v[2] += 2;
 	
-	while (!q.empty())
+	for (int i = 3; i <= t; i++)
 	{
-		int cur = q.front();
-		q.pop();
-		int mulThree = cur * 3;
-		int mulTwo = cur * 2;
-		int addOne = cur + 1;
-		
-		if (mulThree <= t && dp[mulThree] > dp[cur] + 1)
-		{
-			dp[mulThree] = dp[cur] + 1; 
-			q.push(mulThree);
-		}
-		if (mulTwo <= t && dp[mulTwo] > dp[cur] + 1)
-		{
-			dp[mulTwo] = dp[cur] + 1; 
-			q.push(mulTwo);
-		}
-		if (addOne <= t && dp[addOne] > dp[cur] + 1)
-		{
-			dp[addOne] = dp[cur] + 1; 
-			q.push(addOne);
-		}
+		v[i] = (v[i - 1] + v[i - 2]) % 10007;
 	}
 
-	cout << dp[t] << '\n';
-	return 0;
+	cout << v[t];
 }
 

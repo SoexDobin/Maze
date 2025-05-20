@@ -58,8 +58,7 @@
               "RelativeToolTip": "Algorithm\\Algorithm.cpp",
               "ViewState": "AgIAADEAAAAAAAAAAADwv5YAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-13T08:15:12.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T08:15:12.014Z"
             },
             {
               "$type": "Document",
@@ -93,7 +92,7 @@
               "RelativeDocumentMoniker": "Bronze\\Silver.cpp",
               "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp",
               "RelativeToolTip": "Bronze\\Silver.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAUwBsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-22T05:16:17.92Z",
               "EditorCaption": ""
@@ -108,8 +107,7 @@
               "RelativeToolTip": "Maze\\DisjointSet.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-04-08T15:04:01.219Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T15:04:01.219Z"
             },
             {
               "$type": "Document",
@@ -121,8 +119,7 @@
               "RelativeToolTip": "Maze\\Player.cpp",
               "ViewState": "AgIAAMwAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-23T13:59:15.267Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-23T13:59:15.267Z"
             },
             {
               "$type": "Document",
@@ -146,8 +143,7 @@
               "RelativeToolTip": "Maze\\Maze.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-17T09:08:59.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T09:08:59.873Z"
             },
             {
               "$type": "Document",
@@ -159,8 +155,7 @@
               "RelativeToolTip": "Maze\\Board.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-17T09:53:27.563Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T09:53:27.563Z"
             }
           ]
         }

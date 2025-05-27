@@ -1,47 +1,59 @@
 ﻿#include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <set>
+#include <string>
 using namespace std;
 
-vector<int> line;
-unordered_map<int, bool> visited;
-void DFS(vector<vector<int>>& g, const int range, const int here)
+set<string> printed;
+void DFS(unordered_map<int, int>& um,
+	unordered_map<int, bool>& visited,
+	vector<int>& container,
+	const int& range)
 {
-	int size = static_cast<int>(line.size());
+	int size = static_cast<int>(container.size());
 	if (size == range)
 	{
-		for (int i = 0; i < line.size(); i++)
+		string s;
+		
+		for (int i = 0; i < range; i++)
 		{
-			cout << line[i] << " ";
+			s += to_string(um[container[i]]) + " ";
 		}
-		cout << "\n";
+		if (printed.count(s))
+			return;
+		else
+			printed.insert(s);
+		cout << s << "\n";
 		return;
 	}
 
-
-	for (int i = 0; i < g[here].size(); i++)
+	for (int i = 0; i < um.size(); i++)
 	{
-		int data = g[here][i];
-		if (visited[data]) continue;
-		line.push_back(data);
-		visited[data] = true;
-		DFS(g, range, i);
-		visited[line.back()] = false;
-		line.pop_back();
+		if (visited[i]) continue;
+		container.push_back(i);
+		visited[i] = true;
+		DFS(um, visited, container, range);
+		visited[i] = false;
+		container.pop_back();
 	}
 }
 
-void DFSALL(vector<int>& v, vector<vector<int>>& g, const int to, const int range)
+void DFSALL(unordered_map<int, int>& um,
+	unordered_map<int, bool>& visited, 
+	vector<int>& container,
+	const int& range)
 {
-
-	for (int i = 0; i < to; i++)
+	for (int i = 0; i < um.size(); i++)
 	{
-		line.push_back(v[i]);
-		visited[v[i]] = true;
-		DFS(g, range, i);
-		visited[v[i]] = false;
-		line.clear();
+		container.push_back(i);
+		visited[i] = true;
+		DFS(um, visited, container, range);
+
+		container.pop_back();
+		visited[i] = false;
 	}
+
 }
 
 int main()
@@ -49,37 +61,39 @@ int main()
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
+	vector<int> v;
+
 	int t, k;
 	cin >> t >> k;
-	vector<int> v;
-	vector<vector<int>> g = vector<vector<int>>(t);
 	for (int i = 0; i < t; i++)
 	{
 		int x;
 		cin >> x;
 		v.push_back(x);
-		visited.insert({x, false});
 	}
-	for (int i = 1; i < v.size(); i++)
+	for (int i = 0; i < t; i++)
 	{
 		int comp = v[i];
 		int j;
 		for (j = i - 1; j >= 0; j--)
 		{
-			if (v[j] > comp)
+			if (comp < v[j])
 				v[j + 1] = v[j];
 			else
 				break;
 		}
 		v[j + 1] = comp;
 	}
+	unordered_map<int, int> um;
+	unordered_map<int, bool> visited;
+	vector<int> container;
 	for (int i = 0; i < t; i++)
 	{
-		for (int j = 0; j < t; j++)
-		{
-			g[i].push_back(v[j]);
-		}
+		um.insert({i, v[i]});
+		visited.insert({i, false});
 	}
-	DFSALL(v, g, t, k);
+	
+	DFSALL(um, visited, container, k);
+
 	return 0;
 }

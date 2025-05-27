@@ -1,42 +1,45 @@
 ﻿#include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 vector<int> line;
-void DFS(vector<vector<int>>& v, const int from, int& acc, const int range, const int t)
+unordered_map<int, bool> visited;
+void DFS(vector<vector<int>>& g, const int range, const int here)
 {
-	if (acc == range)
+	int size = static_cast<int>(line.size());
+	if (size == range)
 	{
-		line.push_back(from);
-		for (int j = 0; j < line.size(); j++)
+		for (int i = 0; i < line.size(); i++)
 		{
-			cout << line[j] << " ";
+			cout << line[i] << " ";
 		}
 		cout << "\n";
-		line.pop_back();
 		return;
 	}
-	acc += 1;
-	int prevAcc = acc;
 
-	for (int i = 0; i < v[from].size(); i++)
-	{	
-		line.push_back(from);
-		DFS(v, v[from][i], acc, range, t);
-		if (!line.empty())
-			line.pop_back();
-		acc = prevAcc;
+
+	for (int i = 0; i < g[here].size(); i++)
+	{
+		int data = g[here][i];
+		if (visited[data]) continue;
+		line.push_back(data);
+		visited[data] = true;
+		DFS(g, range, i);
+		visited[line.back()] = false;
+		line.pop_back();
 	}
 }
 
-void DFSALL(vector<vector<int>>& v, const int to, const int range)
+void DFSALL(vector<int>& v, vector<vector<int>>& g, const int to, const int range)
 {
-	int acc = 1;
-	
-	for (int i = 1; i <= to; i++)
+
+	for (int i = 0; i < to; i++)
 	{
-		DFS(v, i, acc, range, to);
-		acc = 1;
+		line.push_back(v[i]);
+		visited[v[i]] = true;
+		DFS(g, range, i);
+		visited[v[i]] = false;
 		line.clear();
 	}
 }
@@ -48,12 +51,35 @@ int main()
 
 	int t, k;
 	cin >> t >> k;
-	vector<vector<int>> v = vector<vector<int>>(t + 1);
-	for (int i = 1; i <= t; i++)
+	vector<int> v;
+	vector<vector<int>> g = vector<vector<int>>(t);
+	for (int i = 0; i < t; i++)
 	{
-		for (int j = i + 1; j <= t; j++)
-			v[i].push_back(j);
+		int x;
+		cin >> x;
+		v.push_back(x);
+		visited.insert({x, false});
 	}
-	DFSALL(v, t, k);
+	for (int i = 1; i < v.size(); i++)
+	{
+		int comp = v[i];
+		int j;
+		for (j = i - 1; j >= 0; j--)
+		{
+			if (v[j] > comp)
+				v[j + 1] = v[j];
+			else
+				break;
+		}
+		v[j + 1] = comp;
+	}
+	for (int i = 0; i < t; i++)
+	{
+		for (int j = 0; j < t; j++)
+		{
+			g[i].push_back(v[j]);
+		}
+	}
+	DFSALL(v, g, t, k);
 	return 0;
 }

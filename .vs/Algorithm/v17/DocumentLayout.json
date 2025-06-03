@@ -1,44 +1,44 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\a9018\\Desktop\\Maze\\",
+  "WorkspaceRootPath": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Bronze\\Silver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{942274E0-42DB-4B1D-BB6F-09F6A55273EA}|Bronze\\Bronze.vcxproj|solutionrelative:Bronze\\Silver.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector||{3B902123-F8A7-4915-9F01-361F908088D0}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C8C5CD06-5D65-49AA-BF7A-2D54321545A1}|Algorithm\\Algorithm.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Algorithm\\Algorithm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C8C5CD06-5D65-49AA-BF7A-2D54321545A1}|Algorithm\\Algorithm.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Algorithm\\Algorithm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C8C5CD06-5D65-49AA-BF7A-2D54321545A1}|Algorithm\\Algorithm.vcxproj|solutionrelative:Algorithm\\Algorithm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\Maze.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\DisjointSet.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\DisjointSet.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\DisjointSet.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\Board.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\Maze\\Maze\\pch.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\pch.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A44DBB4B-545C-47AB-9528-CBD1E5EE21B9}|Maze\\Maze.vcxproj|solutionrelative:Maze\\pch.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -56,10 +56,10 @@
               "DocumentIndex": 1,
               "Title": "vector",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
-              "RelativeToolTip": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
-              "ViewState": "AgIAAE0HAAAAAAAAAAAiwFwHAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
+              "ViewState": "AgIAAFAHAAAAAAAAAAAjwF8HAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-05-20T12:33:53.584Z"
             },
@@ -67,9 +67,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Algorithm.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Algorithm\\Algorithm.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Algorithm\\Algorithm.cpp",
               "RelativeDocumentMoniker": "Algorithm\\Algorithm.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Algorithm\\Algorithm.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Algorithm\\Algorithm.cpp",
               "RelativeToolTip": "Algorithm\\Algorithm.cpp",
               "ViewState": "AgIAADEAAAAAAAAAAADwv5YAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -79,9 +79,9 @@
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "Board.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.cpp",
               "RelativeDocumentMoniker": "Maze\\Board.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.cpp",
               "RelativeToolTip": "Maze\\Board.cpp",
               "ViewState": "AgIAAE4AAAAAAAAAAAAgwGUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -91,9 +91,9 @@
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "pch.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\pch.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\pch.cpp",
               "RelativeDocumentMoniker": "Maze\\pch.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\pch.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\pch.cpp",
               "RelativeToolTip": "Maze\\pch.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -103,11 +103,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Silver.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Bronze\\Silver.cpp",
               "RelativeDocumentMoniker": "Bronze\\Silver.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Bronze\\Silver.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Bronze\\Silver.cpp",
               "RelativeToolTip": "Bronze\\Silver.cpp",
-              "ViewState": "AgIAADwAAAAAAAAAAAAmwGIAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-22T05:16:17.92Z",
               "EditorCaption": ""
@@ -116,9 +116,9 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "DisjointSet.h",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\DisjointSet.h",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\DisjointSet.h",
               "RelativeDocumentMoniker": "Maze\\DisjointSet.h",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\DisjointSet.h",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\DisjointSet.h",
               "RelativeToolTip": "Maze\\DisjointSet.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
@@ -128,9 +128,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Player.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.cpp",
               "RelativeDocumentMoniker": "Maze\\Player.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.cpp",
               "RelativeToolTip": "Maze\\Player.cpp",
               "ViewState": "AgIAAMwAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -140,9 +140,9 @@
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "Player.h",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.h",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.h",
               "RelativeDocumentMoniker": "Maze\\Player.h",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Player.h",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Player.h",
               "RelativeToolTip": "Maze\\Player.h",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
@@ -152,9 +152,9 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "Maze.cpp",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Maze.cpp",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Maze.cpp",
               "RelativeDocumentMoniker": "Maze\\Maze.cpp",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Maze.cpp",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Maze.cpp",
               "RelativeToolTip": "Maze\\Maze.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -164,9 +164,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "Board.h",
-              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.h",
+              "DocumentMoniker": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.h",
               "RelativeDocumentMoniker": "Maze\\Board.h",
-              "ToolTip": "C:\\Users\\a9018\\Desktop\\Maze\\Maze\\Board.h",
+              "ToolTip": "C:\\Users\\a9018\\Desktop\\StudyFile\\Maze\\Maze\\Board.h",
               "RelativeToolTip": "Maze\\Board.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",

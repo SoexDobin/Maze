@@ -1,59 +1,23 @@
 ﻿#include <iostream>
 #include <vector>
-#include <unordered_map>
-#include <set>
-#include <string>
+#include <cmath>
 using namespace std;
 
-set<string> printed;
-void DFS(unordered_map<int, int>& um,
-	unordered_map<int, bool>& visited,
-	vector<int>& container,
-	const int& range)
+void GreaterDP(const int& n, const int& k, const vector<int>& w, const vector<int>& v, vector<vector<int>>& dp)
 {
-	int size = static_cast<int>(container.size());
-	if (size == range)
+	// 각 배낭 최대 무게를 1~k 순으로 비교
+	for (int i = 1; i <= k; i++)
 	{
-		string s;
-		
-		for (int i = 0; i < range; i++)
+		for (int j = 1; j <= n; j++)
 		{
-			s += to_string(um[container[i]]) + " ";
+			if (w[j] > i) // j번째 물건의 무게, i현재 배낭의 최대 허용 무게
+				dp[j][i] = dp[j - 1][i];
+			else if (w[j] <= i)
+			{
+				dp[j][i] = max(dp[j-1][i - w[j]] + v[j], dp[j-1][i]);
+			}
 		}
-		if (printed.count(s))
-			return;
-		else
-			printed.insert(s);
-		cout << s << "\n";
-		return;
 	}
-
-	for (int i = 0; i < um.size(); i++)
-	{
-		if (visited[i]) continue;
-		container.push_back(i);
-		visited[i] = true;
-		DFS(um, visited, container, range);
-		visited[i] = false;
-		container.pop_back();
-	}
-}
-
-void DFSALL(unordered_map<int, int>& um,
-	unordered_map<int, bool>& visited, 
-	vector<int>& container,
-	const int& range)
-{
-	for (int i = 0; i < um.size(); i++)
-	{
-		container.push_back(i);
-		visited[i] = true;
-		DFS(um, visited, container, range);
-
-		container.pop_back();
-		visited[i] = false;
-	}
-
 }
 
 int main()
@@ -61,39 +25,20 @@ int main()
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	vector<int> v;
+	vector<int> w = vector<int>(101);
+	vector<int> v = vector<int>(101);
+	vector<vector<int>> dp;
+	int n, k;
+	cin >> n >> k;
 
-	int t, k;
-	cin >> t >> k;
-	for (int i = 0; i < t; i++)
-	{
-		int x;
-		cin >> x;
-		v.push_back(x);
-	}
-	for (int i = 0; i < t; i++)
-	{
-		int comp = v[i];
-		int j;
-		for (j = i - 1; j >= 0; j--)
-		{
-			if (comp < v[j])
-				v[j + 1] = v[j];
-			else
-				break;
-		}
-		v[j + 1] = comp;
-	}
-	unordered_map<int, int> um;
-	unordered_map<int, bool> visited;
-	vector<int> container;
-	for (int i = 0; i < t; i++)
-	{
-		um.insert({i, v[i]});
-		visited.insert({i, false});
-	}
-	
-	DFSALL(um, visited, container, k);
+	dp = vector<vector<int>>(101, vector<int>(100001, 0));
 
-	return 0;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> w[i] >> v[i];
+	}
+
+	GreaterDP(n, k, w, v, dp);
+
+	cout << dp[n][k];
 }

@@ -1,44 +1,74 @@
 ﻿#include <iostream>
 #include <vector>
+#include <queue>
 #include <cmath>
 using namespace std;
 
-void GreaterDP(const int& n, const int& k, const vector<int>& w, const vector<int>& v, vector<vector<int>>& dp)
+void Dijkstra(const int& here, const int& there, const vector<vector<int>>& v, const int& maxVertex) 
 {
-	// 각 배낭 최대 무게를 1~k 순으로 비교
-	for (int i = 1; i <= k; i++)
+	priority_queue<pair<int, int>, vector<pair<int, int>>, less<pair<int, int>>> discovered;
+	vector<int> weight = vector<int>(maxVertex, INT32_MAX);
+
+	for (int i = 0; i < v[here].size(); i++)
 	{
-		for (int j = 1; j <= n; j++)
+		int next = v[here][i];
+		if (here == i) // 동일 정점일 경우 제외
 		{
-			if (w[j] > i) // j번째 물건의 무게, i현재 배낭의 최대 허용 무게
-				dp[j][i] = dp[j - 1][i];
-			else if (w[j] <= i)
+			weight[i] = 0;
+			continue;
+		}		
+			
+		if (next != -1)
+		{
+			discovered.push(pair<int, int>(i, next));
+			weight[i] = next;
+		}
+	}
+
+	while (!discovered.empty())
+	{
+		pair<int, int> now = discovered.top();
+		discovered.pop();
+
+		for (int i = 0; i < v[now.first].size(); i++)
+		{
+			int nearNodeWeight = v[now.first][i];
+			if (nearNodeWeight == -1) continue;
+
+			int accWeight = nearNodeWeight + now.second; 
+
+			if (weight[i] > accWeight)
 			{
-				dp[j][i] = max(dp[j-1][i - w[j]] + v[j], dp[j-1][i]);
+				weight[i] = accWeight;
+				discovered.push(pair<int, int>(i, accWeight));
 			}
 		}
 	}
+
+	cout << weight[there];
 }
 
 int main()
 {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
+	
+	int vertex, bus;
+	cin >> vertex;
+	cin >> bus;
 
-	vector<int> w = vector<int>(101);
-	vector<int> v = vector<int>(101);
-	vector<vector<int>> dp;
-	int n, k;
-	cin >> n >> k;
-
-	dp = vector<vector<int>>(101, vector<int>(100001, 0));
-
-	for (int i = 1; i <= n; i++)
+	vector<vector<int>> adjacent = vector<vector<int>>(vertex + 1, vector<int>(vertex + 1, -1));
+	int here, there;
+	for (int i = 0; i < bus; i++)
 	{
-		cin >> w[i] >> v[i];
+		int w;
+		cin >> here >> there >> w;
+		if (adjacent[here][there] == -1)
+			adjacent[here][there] = w;
+		else if (adjacent[here][there] > w) // 더 큰 가중치를 가진 경우 루트에서 제외
+			adjacent[here][there] = w;
 	}
+	cin >> here >> there;
 
-	GreaterDP(n, k, w, v, dp);
-
-	cout << dp[n][k];
+	Dijkstra(here, there, adjacent, vertex + 1);
 }

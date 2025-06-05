@@ -4,48 +4,40 @@
 #include <cmath>
 using namespace std;
 
-void Dijkstra(const int& here, const int& there, const vector<vector<int>>& v, const int& maxVertex) 
+void Dijkstra(const int& from, const vector<vector<pair<int, int>>>& g, const int& v)
 {
-	priority_queue<pair<int, int>, vector<pair<int, int>>, less<pair<int, int>>> discovered;
-	vector<int> weight = vector<int>(maxVertex, INT32_MAX);
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+	vector<int> bestWeight = vector<int>(v + 1, INT32_MAX);
 
-	for (int i = 0; i < v[here].size(); i++)
+	bestWeight[from] = 0;
+	pq.push(pair<int, int>(0, from));
+	while (!pq.empty())
 	{
-		int next = v[here][i];
-		if (here == i) // 동일 정점일 경우 제외
+		int nowVertex = pq.top().second;
+		int nowWeight = pq.top().first;
+		pq.pop();
+		if (nowWeight > bestWeight[nowVertex]) continue;
+
+		for ( pair<int, int> nextVertex : g[nowVertex])
 		{
-			weight[i] = 0;
-			continue;
-		}		
-			
-		if (next != -1)
-		{
-			discovered.push(pair<int, int>(i, next));
-			weight[i] = next;
-		}
-	}
+			int nextWeight = nextVertex.second;
 
-	while (!discovered.empty())
-	{
-		pair<int, int> now = discovered.top();
-		discovered.pop();
-
-		for (int i = 0; i < v[now.first].size(); i++)
-		{
-			int nearNodeWeight = v[now.first][i];
-			if (nearNodeWeight == -1) continue;
-
-			int accWeight = nearNodeWeight + now.second; 
-
-			if (weight[i] > accWeight)
+			if (bestWeight[nextVertex.first] > nextWeight + nowWeight)
 			{
-				weight[i] = accWeight;
-				discovered.push(pair<int, int>(i, accWeight));
+				bestWeight[nextVertex.first] = nextWeight + nowWeight;
+				pq.push(pair<int, int>(nextWeight + nowWeight, nextVertex.first));
 			}
 		}
 	}
 
-	cout << weight[there];
+	for (int i = 1; i <= v; i++)
+	{
+		int w = bestWeight[i];
+		if (w == INT32_MAX)
+			cout << "INF" << "\n";
+		else
+			cout << w << "\n";
+	}
 }
 
 int main()
@@ -53,22 +45,19 @@ int main()
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 	
-	int vertex, bus;
-	cin >> vertex;
-	cin >> bus;
+	int vertex, edge;
+	int from;
+	cin >> vertex >> edge;
+	cin >> from;
+	vector<vector<pair<int, int>>> g(vertex + 1);
 
-	vector<vector<int>> adjacent = vector<vector<int>>(vertex + 1, vector<int>(vertex + 1, -1));
-	int here, there;
-	for (int i = 0; i < bus; i++)
+	for (int i = 0; i < edge; i++)
 	{
-		int w;
-		cin >> here >> there >> w;
-		if (adjacent[here][there] == -1)
-			adjacent[here][there] = w;
-		else if (adjacent[here][there] > w) // 더 큰 가중치를 가진 경우 루트에서 제외
-			adjacent[here][there] = w;
-	}
-	cin >> here >> there;
+		int here, there, weight;
+		cin >> here >> there >> weight;
 
-	Dijkstra(here, there, adjacent, vertex + 1);
+		g[here].push_back({there, weight});
+	}
+
+	Dijkstra(from, g, vertex);
 }
